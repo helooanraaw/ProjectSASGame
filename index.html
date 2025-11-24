@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Match Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="title-container">
+        <h1>🎮 Memory Match Game 🎮</h1>
+    </div>
+    
+
+    <div id="game-info">
+        <p>Langkah: <span id="steps">0</span></p>
+        <button id="restart-btn">Restart</button>
+    </div>
+
+    <div id="grid"></div>
+
+    <!-- Popup Kemenangan -->
+    <div id="win-popup" class="hidden">
+        <div class="popup-content">
+            <h2>🎉 Selamat, Kamu Menang!</h2>
+            <p>Total langkah: <span id="final-steps"></span></p>
+            <button onclick="restartGame()">Main Lagi</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

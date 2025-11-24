@@ -1,0 +1,135 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: rgb(88, 169, 255);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    border: white solid 3px;
+    border-radius: 15px;
+    background-color: rgb(0, 106, 255);
+}
+
+h1 {
+    color: white;
+}
+
+#game-info {
+    margin-bottom: 15px;
+    color: white;
+    font-size: 18px;
+}
+
+#restart-btn {
+    padding: 8px 15px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    background: #fff;
+    border-radius: 8px;
+}
+
+#grid {
+    width: 420px;
+    margin: auto;
+    display: grid;
+    perspective: 1000px;
+    grid-template-columns: repeat(4, 100px);
+    gap: 10px;
+}
+
+.card {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.4s;
+    cursor: pointer;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card.matched {
+    background: #A3E4D7;
+    border-radius: 10px;
+    cursor: default;
+}
+
+
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    
+    /* menyembunyikan sisi yang tidak menghadap ke kamera */
+    backface-visibility: hidden; 
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white; 
+}
+
+/* Depan (sisi yang terlihat saat kartu belum di-flip) */
+.front {
+    /* Transformasi default 0 derajat */
+    transform: rotateY(0deg); 
+}
+
+/* Belakang (sisi yang tersembunyi, berisi gambar) */
+.back {
+    /* Transformasi diputar 180 derajat (terbalik) */
+    transform: rotateY(180deg);
+    font-size: 0;
+}
+
+/* --- TATA LETAK GAMBAR DI DALAM KARTU --- */
+.card-image {
+    max-width: 100%; 
+    max-height: 100%;
+    border-radius: 10px;
+    aspect-ratio: 1 / 1;
+    object-fit: fill; 
+}
+
+
+.card.matched .front,
+.card.matched .back {
+    background: #A3E4D7 !important;
+}
+
+
+/* POPUP */
+#win-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#win-popup.hidden {
+    display: none;
+}
+
+.popup-content {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 260px;
+}
