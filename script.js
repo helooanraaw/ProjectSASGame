@@ -391,3 +391,11 @@ difficultyBtns.forEach(btn => {
 // Initialize
 createParticles();
 initGame();
+
+// Back button sound
+const backBtn = document.querySelector('.back-btn');
+if (backBtn) {
+    backBtn.addEventListener('click', () => {
+        sounds.click();
+    });
+}
