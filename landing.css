@@ -390,12 +390,7 @@ body {
     margin-bottom: 35px;
 }
 
-.modal-icon {
-    width: 60px;
-    height: 60px;
-    color: #22d3ee;
-    margin: 0 auto 20px;
-}
+
 
 .modal-header h2 {
     font-size: 2.2rem;
@@ -435,21 +430,18 @@ body {
     box-shadow: 0 8px 25px rgba(34, 211, 238, 0.2);
 }
 
-.member-avatar {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-    border-radius: 50%;
-    margin: 0 auto 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-.member-avatar svg {
-    width: 40px;
-    height: 40px;
-    color: #fff;
+
+.member-picture {
+    /* Menentukan ukuran wadah agar persegi */
+    width: 80px; /* Pertahankan lebar yang sudah ada */
+    height: 80px; /* Pastikan tinggi sama dengan lebar */
+    aspect-ratio: 1 / 1; /* Cara modern untuk memastikan rasio 1:1 */
+
+    /* Menjaga agar gambar mengisi seluruh wadah tanpa distorsi
+       dan akan memotong bagian yang berlebihan (cropping) */
+    object-fit: cover; 
+    border-radius: 50%; 
 }
 
 .team-member h3 {

@@ -7,6 +7,27 @@
     <link rel="stylesheet" href="landing.css">
 </head>
 <body>
+
+    <!--
+        Note:
+        Bagian SVG (Scalable Vector Graphics) digunakan untuk membuat gambar dan ikon
+        langsung dengan kode tanpa file gambar terpisah. <svg> adalah wadah grafik,
+        sementara elemen seperti <polygon>, <path>, <circle>, dan <rect> dipakai untuk
+        membentuk bentuk-bentuk geometris.
+
+        - <polygon> : Membuat bentuk dengan garis-garis yang menghubungkan beberapa titik.
+        - <path> : Membuat bentuk bebas menggunakan garis lengkung dan kurva.
+        - <circle> : Membuat lingkaran.
+        - <rect> : Membuat kotak atau persegi panjang.
+        
+        SVG juga mendukung efek seperti gradient, blur, dan animasi untuk membuat logo
+        dan elemen UI terlihat lebih menarik tanpa gambar eksternal.
+
+        Semua bagian <svg> dalam kode ini dibentuk menggunakan bantuan AI
+    -->
+
+
+
     <!-- Particle Background -->
     <div class="particles" id="particles"></div>
     
@@ -57,28 +78,14 @@
             <!-- Main Menu Buttons -->
             <div class="menu-buttons">
                 <a href="game.html" class="menu-btn play-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polygon points="5 3 19 12 5 21 5 3"/>
-                    </svg>
                     <span>MAIN SEKARANG</span>
                 </a>
 
                 <button class="menu-btn info-btn" onclick="showTeamModal()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
                     <span>TIM KAMI</span>
                 </button>
 
                 <button class="menu-btn tutorial-btn" onclick="showTutorialModal()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                        <line x1="12" y1="17" x2="12.01" y2="17"/>
-                    </svg>
                     <span>CARA BERMAIN</span>
                 </button>
             </div>
@@ -117,67 +124,38 @@
     <div class="modal-overlay" id="teamModal">
         <div class="modal-box">
             <button class="close-btn" onclick="closeModal('teamModal')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18"/>
-                    <line x1="6" y1="6" x2="18" y2="18"/>
-                </svg>
+                X
             </button>
             
             <div class="modal-header">
-                <svg class="modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
                 <h2>Tim Kami</h2>
                 <p class="modal-subtitle">Kelompok Tugas SAS - RPL</p>
             </div>
 
             <div class="team-grid">
                 <div class="team-member">
-                    <div class="member-avatar">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                            <circle cx="12" cy="7" r="4"/>
-                        </svg>
-                    </div>
+                    <img src="member/dipta.jpg" class="member-picture">
                     <h3>Anak Agung Gede Dipta Dananjaya</h3>
                     <p class="role">32313</p>
                     <p class="nim">No. Absen 02</p>
                 </div>
 
                 <div class="team-member">
-                    <div class="member-avatar">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                            <circle cx="12" cy="7" r="4"/>
-                        </svg>
-                    </div>
+                    <img src="member/abi.jpg" class="member-picture">
                     <h3>I Nyoman Anrasansya Dharma Putra</h3>
                     <p class="role">32324</p>
                     <p class="nim">No. Absen 13</p>
                 </div>
 
                 <div class="team-member">
-                    <div class="member-avatar">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                            <circle cx="12" cy="7" r="4"/>
-                        </svg>
-                    </div>
+                    <img src="member/ori.png" class="member-picture">
                     <h3>Made Oriont Fedora</h3>
                     <p class="role">32335</p>
                     <p class="nim">No. Absen 24</p>
                 </div>
 
                 <div class="team-member">
-                    <div class="member-avatar">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                            <circle cx="12" cy="7" r="4"/>
-                        </svg>
-                    </div>
+                    <img src="member/abi.jpg" class="member-picture">
                     <h3>Ni Nyoman Anugrah Dewiyani</h3>
                     <p class="role">32347</p>
                     <p class="nim">No. Absen 35</p>
@@ -186,7 +164,7 @@
 
             <div class="project-info">
                 <p><strong>Kelas:</strong> XI RPL 1</p>
-                <p><strong>Tahun:</strong> 2024/2025</p>
+                <p><strong>Tahun:</strong> 2025/2026</p>
                 <p><strong>Mata Pelajaran:</strong> Kompetensi Keahlian Pemograman Web</p>
             </div>
         </div>
@@ -196,18 +174,10 @@
     <div class="modal-overlay" id="tutorialModal">
         <div class="modal-box">
             <button class="close-btn" onclick="closeModal('tutorialModal')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18"/>
-                    <line x1="6" y1="6" x2="18" y2="18"/>
-                </svg>
+                X
             </button>
             
             <div class="modal-header">
-                <svg class="modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                    <line x1="12" y1="17" x2="12.01" y2="17"/>
-                </svg>
                 <h2>Cara Bermain</h2>
                 <p class="modal-subtitle">Panduan lengkap permainan</p>
             </div>
