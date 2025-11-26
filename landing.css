@@ -134,12 +134,6 @@ body {
     margin-bottom: 35px;
 }
 
-.main-logo {
-    width: 160px;
-    height: 160px;
-    filter: drop-shadow(0 0 30px rgba(34, 211, 238, 0.5));
-    animation: logoFloat 4s ease-in-out infinite;
-}
 
 @keyframes logoFloat {
     0%, 100% { 
@@ -580,10 +574,6 @@ body {
         font-size: 1rem;
     }
 
-    .main-logo {
-        width: 120px;
-        height: 120px;
-    }
 
     .menu-btn {
         font-size: 1rem;

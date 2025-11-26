@@ -243,7 +243,7 @@ body {
     transform: translateY(0);
 }
 
-.btn-icon, .sound-icon {
+.btn-icon{
     width: 18px;
     height: 18px;
 }
@@ -381,6 +381,8 @@ body {
     transform: rotateY(180deg);
     padding: 6px;
 }
+
+/* Handle saat kartu match */
 
 .card.matched .card-back {
     background: linear-gradient(135deg, #059669 0%, #047857 100%);
