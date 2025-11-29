@@ -1,17 +1,17 @@
 
 // Create particles
-function createParticles() {
-    const particles = document.getElementById('particles');
+// function createParticles() {
+//     const particles = document.getElementById('particles');
     
-    for (let i = 0; i < 30; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 12 + 's';
-        particle.style.animationDuration = (8 + Math.random() * 8) + 's';
-        particles.appendChild(particle);
-    }
-}
+//     for (let i = 0; i < 30; i++) {
+//         const particle = document.createElement('div');
+//         particle.className = 'particle';
+//         particle.style.left = Math.random() * 100 + '%';
+//         particle.style.animationDelay = Math.random() * 12 + 's';
+//         particle.style.animationDuration = (8 + Math.random() * 8) + 's';
+//         particles.appendChild(particle);
+//     }
+// }
 
 // Sound Effects
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -56,6 +56,8 @@ function closeModal(modalId) {
 }
 
 // Close modal when clicking outside
+// QuerySelectorAll => metode untuk memilih elemen SEMUA HTML yang cocok 
+// dengan pemilih CSS yang diberikan, seperti ID, kelas, atau tag
 document.querySelectorAll('.modal-overlay').forEach(modal => {
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
@@ -65,6 +67,8 @@ document.querySelectorAll('.modal-overlay').forEach(modal => {
 });
 
 // Close modal with ESC key
+// QuerySelectorAll => metode untuk memilih elemen SEMUA HTML yang cocok 
+// dengan pemilih CSS yang diberikan, seperti ID, kelas, atau tag
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         document.querySelectorAll('.modal-overlay.active').forEach(modal => {
@@ -74,6 +78,8 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Button hover sounds
+// QuerySelectorAll => metode untuk memilih elemen SEMUA HTML yang cocok 
+// dengan pemilih CSS yang diberikan, seperti ID, kelas, atau tag
 document.querySelectorAll('.menu-btn').forEach(btn => {
     btn.addEventListener('mouseenter', () => {
         playSound(500, 0.05);
@@ -81,9 +87,11 @@ document.querySelectorAll('.menu-btn').forEach(btn => {
 });
 
 // Initialize
-createParticles();
+// createParticles();
 
 // Back button sound
+// QuerySelector => metode untuk memilih elemen HTML pertama yang cocok 
+// dengan pemilih CSS yang diberikan, seperti ID, kelas, atau tag
 const backBtn = document.querySelector('.back-btn');
 if (backBtn) {
     backBtn.addEventListener('click', () => {

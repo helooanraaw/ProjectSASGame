@@ -104,16 +104,16 @@ const soundLabel = document.getElementById('soundLabel');
 const particles = document.getElementById('particles');
 
 // Initialize Particles
-function createParticles() {
-    for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 15 + 's';
-        particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-        particles.appendChild(particle);
-    }
-}
+// function createParticles() {
+//     for (let i = 0; i < 20; i++) {
+//         const particle = document.createElement('div');
+//         particle.className = 'particle';
+//         particle.style.left = Math.random() * 100 + '%';
+//         particle.style.animationDelay = Math.random() * 15 + 's';
+//         particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+//         particles.appendChild(particle);
+//     }
+// }
 
 // Initialize Game
 // Deklarasi semua variabel yang akan kita pakai
@@ -441,7 +441,7 @@ difficultyBtns.forEach(btn => {
 });
 
 // Initialize
-createParticles();
+// createParticles();
 initGame();
 
 // Back button sound
