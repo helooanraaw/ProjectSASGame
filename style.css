@@ -332,12 +332,13 @@ body {
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card:hover:not(.matched):not(.flipped) {
+/* .card:hover:not(.matched):not(.flipped) {
     transform: translateY(-6px) scale(1.05);
-}
+} */
 
 .card.flipped {
     transform: rotateY(180deg);
+
 }
 
 .card.matched {
@@ -371,15 +372,19 @@ body {
     background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
     border: 2px solid #475569;
     font-size: 2.2rem;
-    color: #64748b;
+    color: #838383;
     font-weight: 700;
+}
+
+/* Hide "?" pada card-back ketika card ter match */
+.card.matched .card-back {
+    color: transparent; 
 }
 
 .card-front {
     background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
     border: 2px solid #94a3b8;
     transform: rotateY(180deg);
-    padding: 6px;
 }
 
 /* Handle saat kartu match */
@@ -584,10 +589,10 @@ body {
     box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
 }
 
-.play-again-btn svg {
+/* .play-again-btn svg {
     width: 22px;
     height: 22px;
-}
+} */
 
 .play-again-btn:hover {
     transform: translateY(-3px);
@@ -600,7 +605,7 @@ body {
 }
 
 /* Footer */
-.footer-tip {
+/* .footer-tip {
     text-align: center;
     color: #64748b;
     font-size: 0.9rem;
@@ -617,7 +622,7 @@ body {
     height: 18px;
     color: #22d3ee;
     flex-shrink: 0;
-}
+} */
 
 /* Responsive */
 @media (max-width: 768px) {
