@@ -36,10 +36,6 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.back-btn svg {
-    width: 20px;
-    height: 20px;
-}
 
 .back-btn:hover {
     background: rgba(30, 41, 59, 0.95);
@@ -60,10 +56,6 @@ body {
         font-size: 0.85rem;
     }
     
-    .back-btn svg {
-        width: 18px;
-        height: 18px;
-    }
 }
 
 /* Particles */
@@ -199,10 +191,6 @@ body {
     letter-spacing: 1px;
 }
 
-.menu-btn svg {
-    width: 24px;
-    height: 24px;
-}
 
 .menu-btn::before {
     content: '';
@@ -287,12 +275,6 @@ body {
     box-shadow: 0 8px 25px rgba(34, 211, 238, 0.2);
 }
 
-.feature-item svg {
-    width: 32px;
-    height: 32px;
-    color: #22d3ee;
-}
-
 .feature-item span {
     font-size: 0.95rem;
     font-weight: 600;
@@ -371,11 +353,6 @@ body {
     background: #dc2626;
     border-color: #ef4444;
     transform: rotate(90deg);
-}
-
-.close-btn svg {
-    width: 20px;
-    height: 20px;
 }
 
 /* Modal Header */

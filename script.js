@@ -17,39 +17,80 @@ let gameState = {
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
 const sounds = {
+    //Parameter yang dimasukkan adalah
+    //(frekuensi tone, berapa lama tone tersebut dimainkan)
     flip: () => playTone(400, 0.1),
     match: () => playTone(800, 0.2),
     wrong: () => playTone(200, 0.3),
+
+
+    //(frekuensi SETIAP tone, berapa lama SETIAP tone tersebut dimainkan)
     win: () => playMelody([523, 659, 784, 1047], 0.15),
+
     click: () => playTone(600, 0.05)
 };
 
 function playTone(frequency, duration) {
+    //Kalau soundEnabled mati, batal
     if (!gameState.soundEnabled) return;
     
+    // Membuat OscillatorNode. Ini adalah sumber suara (generator gelombang). 
+    // Objek inilah yang secara matematis menghasilkan gelombang suara.
     const oscillator = audioContext.createOscillator();
+
+    //Membuat GainNode. Ini bertindak sebagai pengatur volume (atau gain) 
+    // dalam jalur audio.
     const gainNode = audioContext.createGain();
     
+
+    //Menghubungkan keluaran suara dari oscillator (sumber suara) ke 
+    //masukan dari gainNode (pengatur volume).
     oscillator.connect(gainNode);
+
+    //Menghubungkan keluaran suara dari gainNode ke tujuan akhir suara
+    //yaitu speaker / headphone komputer 
     gainNode.connect(audioContext.destination);
     
+
+    //Mengatur nilai frekuensi (pitch) dari osilator sesuai 
+    // dengan nilai parameter frequency yang diberikan.
     oscillator.frequency.value = frequency;
+
+    //set tipe gelombang ke gelombang sinus
+    //Gelombang sinus menghasilkan nada murni atau beep yang lembut.
     oscillator.type = 'sine';
     
+
+    //Mengatur volume awal suara menjadi 0.3 (dari maksimal 1.0) tepat pada waktu saat ini
     gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+
+    //Ini memerintahkan volume untuk menurun secara eksponensial (halus) 
+    // dari nilai saat ini (0.3) ke 0.01 dalam waktu selama duration. (fade out)
     gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
     
+
+    //Memerintahkan osilator untuk mulai menghasilkan suara segera pada waktu saat ini.
     oscillator.start(audioContext.currentTime);
+
+    //Memerintahkan osilator untuk menghentikan suara setelah waktu duration berlalu
     oscillator.stop(audioContext.currentTime + duration);
 }
 
+//berfungsi untuk memainkan serangkaian tone
 function playMelody(frequencies, noteDuration) {
+    ////Kalau soundEnabled mati, batal
     if (!gameState.soundEnabled) return;
     
+    //untuk setiap elemen(tone) di dalam array frequencies
     frequencies.forEach((freq, index) => {
+        //setTimeout, yaitu menunda eksekusi kode yang berada di dalamnya
+        //selama waktu yang di set
         setTimeout(() => {
             playTone(freq, noteDuration);
         }, index * (noteDuration * 1000));
+        //index * (noteDuration * 1000)) mengatur lama waktu tunda sebelum nada dimainkan (milisecond)
+        //noteDuration * 1000: Mengubah durasi nada dari detik menjadi milidetik.
+        //"index *" memastikan tone dimainkan secara bergantian
     });
 }
 
@@ -104,16 +145,22 @@ const soundLabel = document.getElementById('soundLabel');
 const particles = document.getElementById('particles');
 
 // Initialize Particles
-// function createParticles() {
-//     for (let i = 0; i < 20; i++) {
-//         const particle = document.createElement('div');
-//         particle.className = 'particle';
-//         particle.style.left = Math.random() * 100 + '%';
-//         particle.style.animationDelay = Math.random() * 15 + 's';
-//         particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-//         particles.appendChild(particle);
-//     }
-// }
+function createParticles() {
+    for (let i = 0; i < 20; i++) {
+        //buat element div di dom
+        const particle = document.createElement('div');
+        //beri kelas particle
+        particle.className = 'particle';
+        //set posisi X random
+        particle.style.left = Math.random() * 100 + '%';
+        //set delay animasi random
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        //set durasi animasi random (diatas 10 detik)
+        particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+        //masukkan particle ke dalam div particles
+        particles.appendChild(particle);
+    }
+}
 
 // Initialize Game
 // Deklarasi semua variabel yang akan kita pakai
@@ -263,9 +310,6 @@ function checkMatch() {
         firstCardEl.classList.add('matched');
         secondCardEl.classList.add('matched');
         
-        // Particle effect on match
-        // createMatchParticles(firstCardEl);
-        // createMatchParticles(secondCardEl);
         
         //kosongkan kembali flippedCard
         gameState.flippedCards = [];
@@ -298,39 +342,6 @@ function checkMatch() {
     }
 }
 
-// Create match particles effect
-// function createMatchParticles(cardEl) {
-//     const rect = cardEl.getBoundingClientRect();
-//     const colors = ['#22d3ee', '#fbbf24', '#10b981', '#f472b6'];
-    
-//     for (let i = 0; i < 8; i++) {
-//         const particle = document.createElement('div');
-//         particle.style.position = 'fixed';
-//         particle.style.left = rect.left + rect.width / 2 + 'px';
-//         particle.style.top = rect.top + rect.height / 2 + 'px';
-//         particle.style.width = '8px';
-//         particle.style.height = '8px';
-//         particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-//         particle.style.borderRadius = '50%';
-//         particle.style.pointerEvents = 'none';
-//         particle.style.zIndex = '999';
-        
-//         document.body.appendChild(particle);
-        
-//         const angle = (Math.PI * 2 * i) / 8;
-//         const velocity = 50 + Math.random() * 50;
-//         const tx = Math.cos(angle) * velocity;
-//         const ty = Math.sin(angle) * velocity;
-        
-//         particle.animate([
-//             { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-//             { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
-//         ], {
-//             duration: 600,
-//             easing: 'cubic-bezier(0, .9, .57, 1)'
-//         }).onfinish = () => particle.remove();
-//     }
-// }
 
 // Timer Functions
 function startTimer() {
@@ -361,26 +372,6 @@ function updateUI() {
     comboEl.textContent = `x${gameState.combo}`;
 }
 
-// Create confetti
-// function createConfetti() {
-//     const confettiContainer = document.getElementById('confetti');
-//     const colors = ['#22d3ee', '#fbbf24', '#10b981', '#f472b6', '#a78bfa'];
-    
-//     for (let i = 0; i < 50; i++) {
-//         const confetti = document.createElement('div');
-//         confetti.className = 'confetti-piece';
-//         confetti.style.left = Math.random() * 100 + '%';
-//         confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-//         confetti.style.animationDelay = Math.random() * 0.5 + 's';
-//         confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
-//         confettiContainer.appendChild(confetti);
-//     }
-    
-//     setTimeout(() => {
-//         confettiContainer.innerHTML = '';
-//     }, 4000);
-// }
-
 // End Game
 // selesaikan game
 function endGame() {
@@ -399,7 +390,6 @@ function endGame() {
     document.getElementById('finalMoves').textContent = gameState.moves;
     document.getElementById('finalCombo').textContent = `x${gameState.combo}`;
     
-    // createConfetti();
 
     //hilangkan class hidden pada pop up menang, maka itu akan muncul
     winModal.classList.remove('hidden');
@@ -441,7 +431,7 @@ difficultyBtns.forEach(btn => {
 });
 
 // Initialize
-// createParticles();
+createParticles();
 initGame();
 
 // Back button sound

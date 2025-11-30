@@ -1,17 +1,21 @@
 
-// Create particles
-// function createParticles() {
-//     const particles = document.getElementById('particles');
-    
-//     for (let i = 0; i < 30; i++) {
-//         const particle = document.createElement('div');
-//         particle.className = 'particle';
-//         particle.style.left = Math.random() * 100 + '%';
-//         particle.style.animationDelay = Math.random() * 12 + 's';
-//         particle.style.animationDuration = (8 + Math.random() * 8) + 's';
-//         particles.appendChild(particle);
-//     }
-// }
+// Initialize Particles
+function createParticles() {
+    for (let i = 0; i < 20; i++) {
+        //buat element div di dom
+        const particle = document.createElement('div');
+        //beri kelas particle
+        particle.className = 'particle';
+        //set posisi X random
+        particle.style.left = Math.random() * 100 + '%';
+        //set delay animasi random
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        //set durasi animasi random (diatas 10 detik)
+        particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+        //masukkan particle ke dalam div particles
+        particles.appendChild(particle);
+    }
+}
 
 // Sound Effects
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -87,7 +91,7 @@ document.querySelectorAll('.menu-btn').forEach(btn => {
 });
 
 // Initialize
-// createParticles();
+createParticles();
 
 // Back button sound
 // QuerySelector => metode untuk memilih elemen HTML pertama yang cocok 
