@@ -1,10 +1,47 @@
+import { _supabase, checkSession } from './config.js'; // <-- Tambahkan ini
+
+// --- FUNGSI LOGOUT ---
+// Fungsi ini harus dideklarasikan di scope modul
+function handleLogout() {
+    if(confirm("Apakah kamu yakin ingin keluar akun?")) {
+        // Hapus data user dari penyimpanan lokal
+        localStorage.removeItem('user_data');
+        
+        // Sign out dari Supabase
+        _supabase.auth.signOut().then(() => {
+            window.location.href = 'login.html';
+        }).catch(err => {
+            console.error("Logout failed:", err);
+            window.location.href = 'login.html'; // Tetap redirect jika gagal
+        });
+    }
+}
+
+
 // Cek sesi login saat halaman dimuat
 document.addEventListener('DOMContentLoaded', () => {
-    // Fungsi checkSession harus ada di config.js
+    // Tampilkan username
     const user = checkSession(); 
     if (user) {
         document.getElementById('displayUsername').textContent = user.username;
     }
+
+    // *** SOLUSI: Kaitkan fungsi handleLogout ke tombol ***
+    const logoutButton = document.getElementById('logoutBtn');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', handleLogout);
+    }
+
+    // Anda juga harus mengaitkan fungsi modal di sini
+    const teamBtn = document.querySelector('.menu-btn.info-btn');
+    if (teamBtn) teamBtn.addEventListener('click', showTeamModal);
+
+    const tutorialBtn = document.querySelector('.menu-btn.tutorial-btn');
+    if (tutorialBtn) tutorialBtn.addEventListener('click', showTutorialModal);
+
+    // Pastikan tombol leaderboard juga dikaitkan
+    const leaderboardBtn = document.querySelector('.menu-btn.leaderboard-btn');
+    if (leaderboardBtn) leaderboardBtn.addEventListener('click', openLeaderboard);
 });
 
 // --- FUNGSI MODAL ---
@@ -43,16 +80,3 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
         }
     });
 });
-
-// --- FUNGSI LOGOUT ---
-function handleLogout() {
-    if(confirm("Apakah kamu yakin ingin keluar akun?")) {
-        // Hapus data user dari penyimpanan lokal
-        localStorage.removeItem('user_data');
-        
-        // (Opsional) Sign out dari Supabase juga agar sesi server bersih
-        _supabase.auth.signOut().then(() => {
-            window.location.href = 'login.html';
-        });
-    }
-}

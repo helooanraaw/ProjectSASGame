@@ -4,13 +4,15 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 // Inisialisasi Client Supabase
 // Kita menggunakan library global yang di-load via CDN di HTML
-const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+export const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Fungsi Utility untuk cek login
-function checkSession() {
+export function checkSession() {
     const user = localStorage.getItem('user_data');
     if (!user) {
-        window.location.href = 'login.html';
+        // Jika tidak ada sesi, paksa ke halaman login
+        window.location.href = 'login.html'; 
     }
-    return JSON.parse(user);
+    // Mengembalikan data pengguna yang tersimpan
+    return JSON.parse(user); 
 }

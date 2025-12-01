@@ -1,10 +1,14 @@
-// REGISTER
+import { _supabase } from './config.js';
+
+// =======================
+// REGISTER LOGIC
+// =======================
 const registerForm = document.getElementById('registerForm');
 if (registerForm) {
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const username = document.getElementById('regUsername').value.trim(); // trim spasi
+        const username = document.getElementById('regUsername').value.trim();
         const email = document.getElementById('regEmail').value.trim();
         const password = document.getElementById('regPassword').value;
         const confirm = document.getElementById('regConfirmPassword').value;
@@ -30,25 +34,39 @@ if (registerForm) {
         btn.disabled = true;
 
         try {
-            // Cek duplikat username/email manual (karena Supabase kadang return error constraint)
+            // 1. Cek duplikat Username (Hanya diperlukan karena Supabase Auth tidak menangani unique username)
             const { data: existing } = await _supabase
                 .from('users')
                 .select('id')
-                .or(`email.eq.${email},username.eq.${username}`);
+                .eq('username', username);
 
             if (existing && existing.length > 0) {
-                throw new Error("Username atau Email sudah dipakai!");
+                throw new Error("Username sudah dipakai!");
             }
 
-            // Insert User Baru
-            const { error } = await _supabase
-                .from('users')
-                .insert([{ username, email, password }]);
+            // 2. Supabase Auth Sign Up
+            const { data: signUpData, error: signUpError } = await _supabase.auth.signUp({
+                email: email,
+                password: password,
+            });
 
-            if (error) throw error;
+            if (signUpError) throw signUpError;
+            
+            // 3. Insert Username ke Tabel 'users' (Membuat Profil)
+            if (signUpData.user) {
+                const { error: userInsertError } = await _supabase
+                    .from('users')
+                    .insert([
+                        // ID UUID diambil dari Supabase Auth
+                        { id: signUpData.user.id, username: username } 
+                    ]);
+                
+                if (userInsertError) throw userInsertError;
+            }
 
+            // Tangani Alur Konfirmasi Email
             alert("Pendaftaran BERHASIL! Silakan login dengan akun barumu.");
-            window.location.href = 'login.html';
+            window.location.href = 'login.html'; 
 
         } catch (err) {
             errorMsg.textContent = err.message;
@@ -59,7 +77,10 @@ if (registerForm) {
     });
 }
 
-// LOGIN
+
+// =======================
+// LOGIN LOGIC
+// =======================
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
@@ -76,24 +97,37 @@ if (loginForm) {
         btn.disabled = true;
 
         try {
-            const { data, error } = await _supabase
-                .from('users')
-                .select('*')
-                .eq('email', email)
-                .eq('password', password)
-                .maybeSingle(); // Gunakan maybeSingle agar tidak error jika kosong
+            // 1. Supabase Auth Sign In
+            const { data: authData, error: authError } = await _supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
 
-            if (error) throw error;
-            
-            if (!data) {
-                throw new Error("Email atau Password salah!");
+            if (authError) {
+                throw new Error(authError.message === 'Invalid login credentials' 
+                                ? "Email atau Password salah!" 
+                                : authError.message);
             }
 
-            // Simpan sesi
+            // 2. Ambil data username dari tabel 'users'
+            const user_id = authData.user.id;
+            // Ambil email dari authData.user untuk disimpan di LocalStorage
+            const user_email = authData.user.email; 
+            
+            const { data: userData, error: userError } = await _supabase
+                .from('users')
+                .select('id, username') // Hanya perlu ID dan Username dari tabel 'users'
+                .eq('id', user_id)
+                .maybeSingle();
+
+            if (userError) throw userError;
+            if (!userData) throw new Error("Data pengguna tidak ditemukan di database!");
+
+            // 3. Simpan sesi lengkap (termasuk email dari authData)
             localStorage.setItem('user_data', JSON.stringify({
-                id: data.id,
-                username: data.username,
-                email: data.email
+                id: userData.id,
+                username: userData.username,
+                email: user_email // Menggunakan email dari Auth data
             }));
             
             // Redirect ke menu
