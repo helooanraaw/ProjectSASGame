@@ -1,3 +1,5 @@
+// game.js (Baris Paling Atas)
+import { _supabase, checkSession } from './config.js'; // <--- BARIS INI HILANG DARI KODE ANDA YANG BARU
 // Game State
 let gameState = {
     cards: [],
@@ -395,7 +397,7 @@ async function endGame() {
 
     // --- LOGIC SIMPAN KE SUPABASE ---
     const user = JSON.parse(localStorage.getItem('user_data'));
-    
+
     if (user) {
         const { error } = await _supabase
             .from('leaderboard')
@@ -405,9 +407,9 @@ async function endGame() {
                 score: finalScore,
                 time: gameState.timer,
                 moves: gameState.moves,
-                difficulty: gameState.difficulty
+                // HAPUS BARIS INI: difficulty: gameState.difficulty // <--- HAPUS
             }]);
-            
+                
         if (error) {
             console.error("Gagal save score:", error);
         } else {
@@ -451,9 +453,8 @@ difficultyBtns.forEach(btn => {
     });
 });
 
-// Initialize
-createParticles();
-initGame();
+// createParticles();
+// initGame();
 
 // Back button sound
 const backBtn = document.querySelector('.back-btn');
@@ -462,3 +463,9 @@ if (backBtn) {
         sounds.click();
     });
 }
+
+// Gunakan DOMContentLoaded untuk memastikan semua elemen HTML (gameGrid, dll) sudah ada.
+document.addEventListener('DOMContentLoaded', () => {
+    createParticles();
+    initGame();
+});

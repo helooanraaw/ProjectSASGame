@@ -1,4 +1,5 @@
 import { _supabase, checkSession } from './config.js'; // <-- Tambahkan ini
+import { openLeaderboard } from './leaderboard.js'; // <--- TAMBAHKAN INI
 
 // --- FUNGSI LOGOUT ---
 // Fungsi ini harus dideklarasikan di scope modul

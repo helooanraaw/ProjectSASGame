@@ -1,8 +1,12 @@
+import { _supabase } from './config.js'; 
+
 // Fungsi dipanggil saat tombol Leaderboard di klik
-function openLeaderboard() {
+// JADIKAN SEBAGAI EXPORT AGAR BISA DIAKSES MODUL LAIN (menu.js)
+export function openLeaderboard() { 
     document.getElementById('leaderboardModal').classList.add('active');
-    loadLeaderboard(); // Panggil tanpa parameter
+    loadLeaderboard();
 }
+
 
 async function loadLeaderboard() {
     const listEl = document.getElementById('leaderboardList');
