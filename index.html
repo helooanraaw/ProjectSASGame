@@ -3,49 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime Memory Match - Uji Ingatanmu!</title>
+    <title>Anime Memory Match - Uji Ingatan Wibu!</title>
     <link rel="stylesheet" href="assets/css/landing.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+
     <div class="particles" id="particles"></div>
     
+    <nav class="navbar">
+        <div class="nav-logo">
+            <i class=""></i> WIBU
+        </div>
+        <div class="nav-links">
+            <a href="pages/login.html" class="nav-btn-login">Masuk</a>
+            <a href="pages/register.html" class="nav-btn-reg">Daftar</a>
+        </div>
+    </nav>
+
     <div class="landing-container">
-        <div class="hero-section">
-            <div class="logo-wrapper">
-                <i class="fa-solid fa-brain" style="font-size: 4rem; color: #22d3ee; margin-bottom: 20px;"></i>
-            </div>
-            
-            <h1 class="main-title">ANIME MEMORY MATCH</h1>
-            <p class="main-subtitle">Tantang ingatanmu mencocokkan karakter anime favorit dalam waktu tercepat!</p>
+        
+        <div class="hero-wrapper">
+            <div class="hero-content">
+                <div class="badge">Edisi Spesial: Waifu & Husbando</div>
+                <h1 class="main-title">UJI INGATANMU SEBAGAI <span class="highlight-text">WIBU SEJATI</span></h1>
+                <p class="main-subtitle">
+                    Game asah otak klasik dengan sentuhan anime favoritmu. 
+                    Cocokkan kartu, raih kombo, dan panjat papan peringkat global!
+                </p>
 
-            <div class="action-buttons">
-                <a href="pages/login.html" class="btn primary-btn">
-                    <i class="fa-solid fa-gamepad"></i> MULAI MAIN
-                </a>
-                <a href="pages/register.html" class="btn secondary-btn">
-                    <i class="fa-solid fa-user-plus"></i> DAFTAR AKUN
-                </a>
+                <div class="hero-buttons">
+                    <a href="pages/login.html" class="btn primary-btn">
+                        <i class="fa-solid fa-play"></i> MAIN SEKARANG
+                    </a>
+                    <a href="#features" class="btn outline-btn">
+                        <i class="fa-solid fa-info-circle"></i> TENTANG GAME
+                    </a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="h-stat">
+                        <strong>3</strong> Level
+                    </div>
+                    <div class="h-stat">
+                        <strong>8+</strong> Karakter
+                    </div>
+                    <div class="h-stat">
+                        <strong>∞</strong> Seru
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="card-fan">
+                    <img src="images/game/image2.png" class="fan-card c1" alt="Marin">
+                    <img src="images/game/image8.png" class="fan-card c2" alt="Rem">
+                    <img src="images/game/image5.png" class="fan-card c3" alt="Mai">
+                </div>
+                <div class="visual-glow"></div>
             </div>
         </div>
 
-        <div class="info-grid">
-            <div class="info-card">
-                <i class="fa-solid fa-bolt"></i>
-                <h3>Cepat & Tepat</h3>
-                <p>Pacu adrenalinmu dengan timer! Semakin cepat kamu mencocokkan kartu, skor semakin tinggi.</p>
-            </div>
-            <div class="info-card">
-                <i class="fa-solid fa-layer-group"></i>
-                <h3>3 Level Kesulitan</h3>
-                <p>Mulai dari Easy untuk pemanasan, hingga Hard untuk kamu yang ngaku wibu sejati.</p>
-            </div>
-            <div class="info-card">
-                <i class="fa-solid fa-trophy"></i>
-                <h3>Raih Peringkat</h3>
-                <p>Kalahkan skor teman-temanmu dan jadilah pemuncak di Global Leaderboard.</p>
+        <div class="marquee-section">
+            <p class="section-label">FEATURING CHARACTERS</p>
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <img src="images/game/image1.png">
+                    <img src="images/game/image2.png">
+                    <img src="images/game/image3.png">
+                    <img src="images/game/image4.png">
+                    <img src="images/game/image5.png">
+                    <img src="images/game/image6.png">
+                    <img src="images/game/image7.png">
+                    <img src="images/game/image8.png">
+                    <img src="images/game/image1.png">
+                    <img src="images/game/image2.png">
+                    <img src="images/game/image3.png">
+                    <img src="images/game/image4.png">
+                    <img src="images/game/image5.png">
+                    <img src="images/game/image6.png">
+                    <img src="images/game/image7.png">
+                    <img src="images/game/image8.png">
+                </div>
             </div>
         </div>
+
+        <div id="features" class="features-section">
+            <h2 class="section-title">KENAPA HARUS MAIN?</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="icon-box"><i class="fa-solid fa-bolt"></i></div>
+                    <h3>Gameplay Cepat</h3>
+                    <p>Pacu adrenalin dengan timer. Semakin cepat tangan dan matamu, semakin tinggi skor yang kamu dapatkan.</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon-box"><i class="fa-solid fa-layer-group"></i></div>
+                    <h3>Tingkat Kesulitan</h3>
+                    <p>Mulai dari <strong>Easy</strong> untuk pemanasan, hingga <strong>Hard</strong> untuk tantangan memori tingkat dewa.</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon-box"><i class="fa-solid fa-trophy"></i></div>
+                    <h3>Global Leaderboard</h3>
+                    <p>Simpan skormu ke database dan buktikan namamu layak berada di puncak klasemen dunia.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>SIAP MENERIMA TANTANGAN?</h2>
+            <p>Buat akun gratis, simpan progresmu, dan jadilah juara.</p>
+            <a href="pages/register.html" class="btn glow-btn">DAFTAR AKUN GRATIS</a>
+        </div>
+
+        <footer class="landing-footer">
+            <p>&copy; 2025 Anime Memory Match. Project SAS RPL.</p>
+        </footer>
     </div>
 
     <script src="assets/js/landing.js"></script>
