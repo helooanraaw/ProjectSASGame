@@ -386,6 +386,7 @@ async function endGame() {
     const finalScore = gameState.score + timeBonus + moveBonus + difficultyBonus;
     
     gameState.score = finalScore;
+    console.log('Final Score yang didapat:', finalScore);
     
     // Update Tampilan Modal
     document.getElementById('finalScore').textContent = finalScore;
@@ -399,21 +400,43 @@ async function endGame() {
     const user = JSON.parse(localStorage.getItem('user_data'));
 
     if (user) {
-        const { error } = await _supabase
+        // 1. Ambil Skor Lama (Hanya untuk membandingkan)
+        const { data: existingEntry, error: fetchError } = await _supabase
             .from('leaderboard')
-            .insert([{
-                user_id: user.id,
-                username: user.username,
-                score: finalScore,
-                time: gameState.timer,
-                moves: gameState.moves,
-                // HAPUS BARIS INI: difficulty: gameState.difficulty // <--- HAPUS
-            }]);
+            .select('score')
+            .eq('user_id', user.id)
+            .maybeSingle(); // Gunakan maybeSingle agar tidak error jika tidak ada data
+
+        const currentHighScore = existingEntry ? existingEntry.score : 0;
+
+        // 2. Bandingkan dan Lakukan UPSERT
+        if (finalScore > currentHighScore) {
+            console.log("Melakukan UPSERT karena skor baru lebih tinggi!");
+            
+            const { error: upsertError } = await _supabase
+                .from('leaderboard')
+                .upsert(
+                    {
+                        user_id: user.id, // Ini adalah kunci konflik (Primary Key baru Anda)
+                        username: user.username, // Pertahankan kolom ini jika Anda tidak menghapusnya
+                        score: finalScore,
+                        time: gameState.timer,
+                        moves: gameState.moves,
+                    }, 
+                    { 
+                        onConflict: 'user_id' 
+                        // Jika user_id bentrok, update semua kolom yang diberikan di atas.
+                    }
+                );
                 
-        if (error) {
-            console.error("Gagal save score:", error);
+            if (upsertError) {
+                console.error("Gagal save high score:", upsertError);
+            } else {
+                console.log("New High Score saved!");
+            }
         } else {
-            console.log("Score saved!");
+            console.log("TIDAK melakukan UPSERT karena skor baru TIDAK lebih tinggi.");
+            console.log(`Skor baru (${finalScore}) tidak lebih tinggi dari High Score lama (${currentHighScore}). Tidak disimpan.`);
         }
     }
 }
