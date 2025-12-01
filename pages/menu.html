@@ -3,166 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime Memory Match - Welcome</title>
+    <title>Menu Utama - Anime Memory Match</title>
+    
     <link rel="stylesheet" href="../assets/css/landing.css">
+    <link rel="stylesheet" href="../assets/css/menu.css">
+    <link rel="stylesheet" href="../assets/css/leaderboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-    <!-- Particle Background -->
     <div class="particles" id="particles"></div>
     
-    <!-- Main Container -->
     <div class="landing-container">
-        
-        <!-- Hero Section -->
         <div class="hero-section">
-            <!-- Logo Animated -->
-            <div class="logo-wrapper">
-                <!-- Logo here -->
-            </div>
-
-            <!-- Title -->
+            
             <h1 class="main-title">ANIME MEMORY MATCH</h1>
-            <p class="main-subtitle">Test your memory skills with anime characters!</p>
+            <p class="main-subtitle">Siap untuk menguji ingatanmu hari ini?</p>
 
-            <!-- Main Menu Buttons -->
+            <div class="user-profile-banner">
+                <div class="user-greeting">
+                    <span class="greeting-label">Selamat Datang,</span>
+                    <h3 class="username-text" id="displayUsername">Player</h3>
+                </div>
+                <div class="status-indicator">
+                    <i class="fa-solid fa-circle"></i> Online
+                </div>
+            </div>
             <div class="menu-buttons">
                 <a href="game.html" class="menu-btn play-btn">
-                    <span>MAIN SEKARANG</span>
+                    <i class="fa-solid fa-gamepad"></i> <span>MAIN SEKARANG</span>
                 </a>
 
+                <button class="menu-btn leaderboard-btn" onclick="openLeaderboard()">
+                    <i class="fa-solid fa-trophy"></i> <span>LEADERBOARD</span>
+                </button>
+
                 <button class="menu-btn info-btn" onclick="showTeamModal()">
-                    <span>TIM KAMI</span>
+                    <i class="fa-solid fa-users"></i> <span>TIM KAMI</span>
                 </button>
 
                 <button class="menu-btn tutorial-btn" onclick="showTutorialModal()">
-                    <span>CARA BERMAIN</span>
+                    <i class="fa-solid fa-book-open"></i> <span>CARA BERMAIN</span>
                 </button>
-            </div>
 
-            <!-- Features -->
-            <div class="features">
-                <div class="feature-item">
-                    <span>3 Level Kesulitan</span>
-                </div>
-                <div class="feature-item">
-                    <span>Sistem Scoring</span>
-                </div>
-                <div class="feature-item">
-                    <span>Sound Effects</span>
-                </div>
+                <button class="menu-btn logout-btn" onclick="handleLogout()">
+                    <i class="fa-solid fa-right-from-bracket"></i> <span>KELUAR</span>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Team Modal -->
     <div class="modal-overlay" id="teamModal">
         <div class="modal-box">
-            <button class="close-btn" onclick="closeModal('teamModal')">
-                X
-            </button>
-            
+            <button class="close-btn" onclick="closeModal('teamModal')"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-header">
                 <h2>Tim Kami</h2>
                 <p class="modal-subtitle">Kelompok Tugas SAS - RPL</p>
             </div>
-
             <div class="team-grid">
                 <div class="team-member">
-                    <img src="member/dipta.jpg" class="member-picture">
-                    <h3>Anak Agung Gede Dipta Dananjaya</h3>
-                    <p class="role">32313</p>
-                    <p class="nim">No. Absen 02</p>
+                    <img src="../images/member/dipta.jpg" class="member-picture" alt="Dipta">
+                    <h3>Dipta Dananjaya</h3><p class="role">Developer</p>
                 </div>
-
                 <div class="team-member">
-                    <img src="member/anra.jpg" class="member-picture">
-                    <h3>I Nyoman Anrasansya Dharma Putra</h3>
-                    <p class="role">32324</p>
-                    <p class="nim">No. Absen 13</p>
+                    <img src="../images/member/anra.jpg" class="member-picture" alt="Anra">
+                    <h3>Anrasansya</h3><p class="role">UI/UX Designer</p>
                 </div>
-
                 <div class="team-member">
-                    <img src="member/ori.png" class="member-picture">
-                    <h3>Made Oriont Fedora</h3>
-                    <p class="role">32335</p>
-                    <p class="nim">No. Absen 24</p>
+                    <img src="../images/member/ori.png" class="member-picture" alt="Ori">
+                    <h3>Oriont Fedora</h3><p class="role">Database</p>
                 </div>
-
                 <div class="team-member">
-                    <img src="member/abi.jpg" class="member-picture">
-                    <h3>Ni Nyoman Anugrah Dewiyani</h3>
-                    <p class="role">32347</p>
-                    <p class="nim">No. Absen 35</p>
+                    <img src="../images/member/abi.jpg" class="member-picture" alt="Abi">
+                    <h3>Anugrah Dewiyani</h3><p class="role">Content</p>
                 </div>
-            </div>
-
-            <div class="project-info">
-                <p><strong>Kelas:</strong> XI RPL 1</p>
-                <p><strong>Tahun:</strong> 2025/2026</p>
-                <p><strong>Mata Pelajaran:</strong> Kompetensi Keahlian Pemograman Web</p>
             </div>
         </div>
     </div>
 
-    <!-- Tutorial Modal -->
     <div class="modal-overlay" id="tutorialModal">
         <div class="modal-box">
-            <button class="close-btn" onclick="closeModal('tutorialModal')">
-                X
-            </button>
-            
-            <div class="modal-header">
-                <h2>Cara Bermain</h2>
-                <p class="modal-subtitle">Panduan lengkap permainan</p>
-            </div>
-
+            <button class="close-btn" onclick="closeModal('tutorialModal')"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header"><h2>Cara Bermain</h2></div>
             <div class="tutorial-content">
-                <div class="tutorial-step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Pilih Level Kesulitan</h3>
-                        <p>Pilih Easy (4 pasang), Medium (6 pasang), atau Hard (8 pasang)</p>
-                    </div>
-                </div>
-
-                <div class="tutorial-step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>Klik Kartu untuk Membuka</h3>
-                        <p>Klik dua kartu untuk melihat gambar di baliknya</p>
-                    </div>
-                </div>
-
-                <div class="tutorial-step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3>Cocokkan Kartu yang Sama</h3>
-                        <p>Jika gambar sama, kartu akan tetap terbuka. Jika berbeda, kartu akan tertutup kembali</p>
-                    </div>
-                </div>
-
-                <div class="tutorial-step">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h3>Bangun Combo untuk Skor Tinggi</h3>
-                        <p>Match berturut-turut akan meningkatkan combo multiplier dan menambah skor lebih banyak</p>
-                    </div>
-                </div>
-
-                <div class="tutorial-step">
-                    <div class="step-number">5</div>
-                    <div class="step-content">
-                        <h3>Selesaikan Secepat Mungkin</h3>
-                        <p>Waktu dan jumlah langkah mempengaruhi skor akhir. Semakin cepat dan sedikit langkah, semakin tinggi bonus!</p>
-                    </div>
-                </div>
+                <div class="tutorial-step"><div class="step-number">1</div><div class="step-content"><h3>Pilih Level</h3><p>Easy, Medium, atau Hard.</p></div></div>
+                <div class="tutorial-step"><div class="step-number">2</div><div class="step-content"><h3>Buka Kartu</h3><p>Klik 2 kartu untuk melihat isinya.</p></div></div>
+                <div class="tutorial-step"><div class="step-number">3</div><div class="step-content"><h3>Cocokkan</h3><p>Cari pasangan gambar yang sama secepatnya.</p></div></div>
             </div>
         </div>
     </div>
 
+    <div class="modal-overlay" id="leaderboardModal">
+        <div class="modal-box leaderboard-box">
+            <button class="close-btn" onclick="closeModal('leaderboardModal')"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <h2>Top Global Rank</h2>
+                <p class="modal-subtitle">Pemain Terbaik Sepanjang Masa</p>
+            </div>
+            <div class="leaderboard-list" id="leaderboardList">
+                <p style="text-align:center;">Memuat data...</p>
+            </div>
+        </div>
+    </div>
 
-
-    <script src="landing.js"></script>
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/landing.js"></script>
+    <script src="../assets/js/leaderboard.js"></script>
+    <script src="../assets/js/menu.js"></script>
 </body>
 </html>

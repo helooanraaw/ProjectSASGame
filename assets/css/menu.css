@@ -1,15 +1,69 @@
-.welcome-text {
-    font-size: 2rem;
-    color: white;
-    margin-bottom: 2rem;
+/* --- Banner Profil User (Versi Teks Simpel) --- */
+.user-profile-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    /* Glass Effect */
+    background: rgba(30, 41, 59, 0.6);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    
+    padding: 15px 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 480px; 
+    margin: 20px auto 40px auto; /* Jarak dari judul dan tombol */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeInDown 0.6s ease-out;
 }
-.welcome-text span {
-    color: #22d3ee;
+
+.user-greeting {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }
-.logout-btn {
-    border-color: #ef4444;
+
+.greeting-label {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
-.logout-btn:hover {
-    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
-    border-color: #ef4444;
+
+.username-text {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: capitalize;
+}
+
+/* Indikator Online */
+.status-indicator {
+    background: rgba(6, 78, 59, 0.4);
+    color: #34d399;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-indicator i {
+    font-size: 0.5rem;
+    color: #34d399;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
 }

@@ -1,44 +1,79 @@
 .leaderboard-box {
     max-width: 500px;
+    width: 90%;
 }
+
+.modal-header h2 {
+    color: #fbbf24; /* Warna Emas */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 .leaderboard-list {
     margin-top: 20px;
     max-height: 400px;
     overflow-y: auto;
+    padding-right: 5px;
 }
+
 .lb-item {
     display: flex;
     justify-content: space-between;
-    padding: 15px;
-    border-bottom: 1px solid #334155;
     align-items: center;
+    padding: 16px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: transform 0.2s;
 }
-.lb-rank {
+
+.lb-item:hover {
+    background: rgba(30, 41, 59, 0.6);
+    transform: translateX(5px);
+    border-color: #22d3ee;
+}
+
+.lb-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.rank-num {
+    font-size: 1.2rem;
     font-weight: bold;
-    color: #fbbf24;
     width: 30px;
+    text-align: center;
 }
+
 .lb-user {
-    flex-grow: 1;
-    text-align: left;
-    padding-left: 10px;
+    font-weight: 600;
+    font-size: 1rem;
     color: #fff;
 }
+
 .lb-score {
-    font-weight: bold;
-    color: #22d3ee;
+    font-family: 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #fbbf24;
 }
-.filter-btn {
-    background: transparent;
-    border: 1px solid #334155;
+
+.lb-score small {
+    font-size: 0.7rem;
     color: #94a3b8;
-    padding: 5px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    margin: 0 5px;
+    font-weight: normal;
 }
-.filter-btn.active {
-    background: #22d3ee;
-    color: #0f172a;
-    border-color: #22d3ee;
+
+/* Scrollbar Custom */
+.leaderboard-list::-webkit-scrollbar {
+    width: 6px;
+}
+.leaderboard-list::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.3);
+}
+.leaderboard-list::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
 }

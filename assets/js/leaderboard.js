@@ -1,48 +1,51 @@
+// Fungsi dipanggil saat tombol Leaderboard di klik
 function openLeaderboard() {
     document.getElementById('leaderboardModal').classList.add('active');
-    loadLeaderboard('medium'); // Default load medium
+    loadLeaderboard(); // Panggil tanpa parameter
 }
 
-async function loadLeaderboard(difficulty) {
+async function loadLeaderboard() {
     const listEl = document.getElementById('leaderboardList');
-    listEl.innerHTML = '<p style="text-align:center;">Mengambil data...</p>';
+    listEl.innerHTML = '<p style="text-align:center;">Mengambil data rank...</p>';
 
-    // Update tombol aktif
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        if(btn.textContent.toLowerCase() === difficulty) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
-    });
-
-    // Ambil data dari Supabase
+    // Ambil Top 10 Score Tertinggi (Global / Semua Difficulty)
     const { data, error } = await _supabase
         .from('leaderboard')
         .select('*')
-        .eq('difficulty', difficulty)
-        .order('score', { ascending: false }) // Score tertinggi di atas
-        .limit(10);
+        .order('score', { ascending: false }) // Urutkan dari score terbesar
+        .limit(10); // Ambil 10 aja
 
     if (error) {
-        listEl.innerHTML = '<p style="text-align:center; color:red">Gagal memuat data.</p>';
+        listEl.innerHTML = '<p style="text-align:center; color:#ef4444">Gagal memuat data.</p>';
+        console.error(error);
         return;
     }
 
-    if (data.length === 0) {
-        listEl.innerHTML = '<p style="text-align:center;">Belum ada record.</p>';
+    if (!data || data.length === 0) {
+        listEl.innerHTML = '<p style="text-align:center; color:#94a3b8">Belum ada pemain.</p>';
         return;
     }
 
     let html = '';
     data.forEach((item, index) => {
+        // Tentukan warna medali untuk juara 1, 2, 3
+        let rankClass = 'rank-num';
+        let rankDisplay = `#${index + 1}`;
+        
+        if (index === 0) rankDisplay = '🥇';
+        if (index === 1) rankDisplay = '🥈';
+        if (index === 2) rankDisplay = '🥉';
+
         html += `
             <div class="lb-item">
-                <span class="lb-rank">#${index + 1}</span>
-                <span class="lb-user">${item.username}</span>
-                <div style="text-align:right">
-                    <div class="lb-score">${item.score} pts</div>
-                    <small style="color:#64748b">${item.moves} moves</small>
+                <div class="lb-left">
+                    <span class="${rankClass}">${rankDisplay}</span>
+                    <div class="lb-info">
+                        <span class="lb-user">${item.username}</span>
+                    </div>
+                </div>
+                <div class="lb-right">
+                    <div class="lb-score">${item.score} <small>pts</small></div>
                 </div>
             </div>
         `;

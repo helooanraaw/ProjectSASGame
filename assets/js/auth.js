@@ -1,85 +1,109 @@
-// REGISTER LOGIC
+// REGISTER
 const registerForm = document.getElementById('registerForm');
 if (registerForm) {
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const username = document.getElementById('regUsername').value;
-        const email = document.getElementById('regEmail').value;
+        const username = document.getElementById('regUsername').value.trim(); // trim spasi
+        const email = document.getElementById('regEmail').value.trim();
         const password = document.getElementById('regPassword').value;
         const confirm = document.getElementById('regConfirmPassword').value;
         const errorMsg = document.getElementById('regError');
+        const btn = document.querySelector('.auth-btn');
 
-        // Validasi Password
+        // Reset error display
+        errorMsg.style.display = 'none';
+
         if (password !== confirm) {
-            errorMsg.textContent = "Password tidak sama!";
+            errorMsg.textContent = "Password konfirmasi tidak cocok!";
             errorMsg.style.display = 'block';
             return;
         }
 
-        // Cek apakah username/email sudah ada
-        const { data: existingUser } = await _supabase
-            .from('users')
-            .select('*')
-            .or(`email.eq.${email},username.eq.${username}`);
-
-        if (existingUser && existingUser.length > 0) {
-            errorMsg.textContent = "Username atau Email sudah terdaftar!";
+        if (password.length < 6) {
+            errorMsg.textContent = "Password minimal 6 karakter!";
             errorMsg.style.display = 'block';
             return;
         }
 
-        // Insert ke Database
-        const { error } = await _supabase
-            .from('users')
-            .insert([{ username, email, password }]);
+        btn.textContent = 'Mendaftar...';
+        btn.disabled = true;
 
-        if (error) {
-            errorMsg.textContent = "Gagal mendaftar: " + error.message;
-            errorMsg.style.display = 'block';
-        } else {
-            alert("Pendaftaran berhasil! Silakan login.");
+        try {
+            // Cek duplikat username/email manual (karena Supabase kadang return error constraint)
+            const { data: existing } = await _supabase
+                .from('users')
+                .select('id')
+                .or(`email.eq.${email},username.eq.${username}`);
+
+            if (existing && existing.length > 0) {
+                throw new Error("Username atau Email sudah dipakai!");
+            }
+
+            // Insert User Baru
+            const { error } = await _supabase
+                .from('users')
+                .insert([{ username, email, password }]);
+
+            if (error) throw error;
+
+            alert("Pendaftaran BERHASIL! Silakan login dengan akun barumu.");
             window.location.href = 'login.html';
+
+        } catch (err) {
+            errorMsg.textContent = err.message;
+            errorMsg.style.display = 'block';
+            btn.textContent = 'Buat Akun';
+            btn.disabled = false;
         }
     });
 }
 
-// LOGIN LOGIC
+// LOGIN
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const email = document.getElementById('loginEmail').value;
+        const email = document.getElementById('loginEmail').value.trim();
         const password = document.getElementById('loginPassword').value;
         const errorMsg = document.getElementById('loginError');
         const btn = document.querySelector('.auth-btn');
 
+        // Reset
+        errorMsg.style.display = 'none';
         btn.textContent = 'Memuat...';
         btn.disabled = true;
 
-        // Query manual ke tabel users (sesuai request SQL kamu)
-        const { data, error } = await _supabase
-            .from('users')
-            .select('*')
-            .eq('email', email)
-            .eq('password', password)
-            .single();
+        try {
+            const { data, error } = await _supabase
+                .from('users')
+                .select('*')
+                .eq('email', email)
+                .eq('password', password)
+                .maybeSingle(); // Gunakan maybeSingle agar tidak error jika kosong
 
-        if (error || !data) {
-            errorMsg.textContent = "Email atau Password salah!";
-            errorMsg.style.display = 'block';
-            btn.textContent = 'Main Sekarang';
-            btn.disabled = false;
-        } else {
-            // Simpan sesi di LocalStorage
+            if (error) throw error;
+            
+            if (!data) {
+                throw new Error("Email atau Password salah!");
+            }
+
+            // Simpan sesi
             localStorage.setItem('user_data', JSON.stringify({
                 id: data.id,
                 username: data.username,
                 email: data.email
             }));
             
+            // Redirect ke menu
             window.location.href = 'menu.html';
+
+        } catch (err) {
+            errorMsg.textContent = err.message;
+            errorMsg.style.display = 'block';
+            btn.textContent = 'Main Sekarang';
+            btn.disabled = false;
         }
     });
 }
