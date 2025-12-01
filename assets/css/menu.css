@@ -677,6 +677,11 @@ body {
     background: #22d3ee;
 }
 
+/* Loading Text */
+.loading-text {
+    text-align: center;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .main-title {

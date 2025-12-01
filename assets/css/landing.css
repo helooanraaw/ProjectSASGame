@@ -32,6 +32,7 @@ body {
     top: 0;
     z-index: 100;
     background: rgba(2, 6, 23, 0.8);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
@@ -122,6 +123,7 @@ body {
 .highlight-text {
     background: linear-gradient(90deg, #22d3ee, #8b5cf6);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -298,6 +300,7 @@ body {
     margin-bottom: 60px;
     background: linear-gradient(to right, #fff, #94a3b8);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 

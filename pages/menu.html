@@ -56,7 +56,7 @@
 
     <div class="modal-overlay" id="teamModal">
         <div class="modal-box">
-            <button class="close-btn" onclick="closeModal('teamModal')"><i class="fa-solid fa-xmark"></i></button>
+            <button class="close-btn" title="Tutup" onclick="closeModal('teamModal')"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-header">
                 <h2>Tim Kami</h2>
                 <p class="modal-subtitle">Kelompok Tugas SAS - RPL</p>
@@ -84,7 +84,7 @@
 
     <div class="modal-overlay" id="tutorialModal">
         <div class="modal-box">
-            <button class="close-btn" onclick="closeModal('tutorialModal')"><i class="fa-solid fa-xmark"></i></button>
+            <button class="close-btn" title="Tutup" onclick="closeModal('tutorialModal')"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-header"><h2>Cara Bermain</h2></div>
             <div class="tutorial-content">
                 <div class="tutorial-step"><div class="step-number">1</div><div class="step-content"><h3>Pilih Level</h3><p>Easy, Medium, atau Hard.</p></div></div>
@@ -96,13 +96,13 @@
 
     <div class="modal-overlay" id="leaderboardModal">
         <div class="modal-box leaderboard-box">
-            <button class="close-btn" onclick="closeModal('leaderboardModal')"><i class="fa-solid fa-xmark"></i></button>
+            <button class="close-btn" title="Tutup" onclick="closeModal('leaderboardModal')"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-header">
                 <h2>Top Global Rank</h2>
                 <p class="modal-subtitle">Pemain Terbaik Sepanjang Masa</p>
             </div>
             <div class="leaderboard-list" id="leaderboardList">
-                <p style="text-align:center;">Memuat data...</p>
+                <p class="loading-text">Memuat data...</p>
             </div>
         </div>
     </div>
