@@ -225,6 +225,7 @@ function renderBoard() {
     gameState.cards.forEach(card => {
         const cardEl = document.createElement('div');
         cardEl.className = 'card';
+        
         cardEl.dataset.id = card.id;
         
         cardEl.innerHTML = `

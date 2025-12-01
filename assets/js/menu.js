@@ -10,10 +10,10 @@ function handleLogout() {
         
         // Sign out dari Supabase
         _supabase.auth.signOut().then(() => {
-            window.location.href = 'login.html';
+            window.location.href = '../index.html';
         }).catch(err => {
             console.error("Logout failed:", err);
-            window.location.href = 'login.html'; // Tetap redirect jika gagal
+            window.location.href = '../index.html'; // Tetap redirect jika gagal
         });
     }
 }

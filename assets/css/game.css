@@ -356,6 +356,11 @@ body {
 }
 
 .card-back {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE/Edge */
+    user-select: none;         /* Standard */
+    
     background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
     border: 2px solid #475569;
     font-size: 2.2rem;
@@ -586,6 +591,8 @@ body {
 .play-again-btn:active {
     transform: translateY(-1px);
 }
+
+
 
 .footer-tip {
     text-align: center;
