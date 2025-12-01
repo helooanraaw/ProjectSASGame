@@ -1,0 +1,44 @@
+.leaderboard-box {
+    max-width: 500px;
+}
+.leaderboard-list {
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+.lb-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #334155;
+    align-items: center;
+}
+.lb-rank {
+    font-weight: bold;
+    color: #fbbf24;
+    width: 30px;
+}
+.lb-user {
+    flex-grow: 1;
+    text-align: left;
+    padding-left: 10px;
+    color: #fff;
+}
+.lb-score {
+    font-weight: bold;
+    color: #22d3ee;
+}
+.filter-btn {
+    background: transparent;
+    border: 1px solid #334155;
+    color: #94a3b8;
+    padding: 5px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+.filter-btn.active {
+    background: #22d3ee;
+    color: #0f172a;
+    border-color: #22d3ee;
+}

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Memory Match - Welcome</title>
+    <link rel="stylesheet" href="../assets/css/landing.css">
+</head>
+<body>
+
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Main Container -->
+    <div class="landing-container">
+        
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <!-- Logo Animated -->
+            <div class="logo-wrapper">
+                <!-- Logo here -->
+            </div>
+
+            <!-- Title -->
+            <h1 class="main-title">ANIME MEMORY MATCH</h1>
+            <p class="main-subtitle">Test your memory skills with anime characters!</p>
+
+            <!-- Main Menu Buttons -->
+            <div class="menu-buttons">
+                <a href="game.html" class="menu-btn play-btn">
+                    <span>MAIN SEKARANG</span>
+                </a>
+
+                <button class="menu-btn info-btn" onclick="showTeamModal()">
+                    <span>TIM KAMI</span>
+                </button>
+
+                <button class="menu-btn tutorial-btn" onclick="showTutorialModal()">
+                    <span>CARA BERMAIN</span>
+                </button>
+            </div>
+
+            <!-- Features -->
+            <div class="features">
+                <div class="feature-item">
+                    <span>3 Level Kesulitan</span>
+                </div>
+                <div class="feature-item">
+                    <span>Sistem Scoring</span>
+                </div>
+                <div class="feature-item">
+                    <span>Sound Effects</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Modal -->
+    <div class="modal-overlay" id="teamModal">
+        <div class="modal-box">
+            <button class="close-btn" onclick="closeModal('teamModal')">
+                X
+            </button>
+            
+            <div class="modal-header">
+                <h2>Tim Kami</h2>
+                <p class="modal-subtitle">Kelompok Tugas SAS - RPL</p>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="member/dipta.jpg" class="member-picture">
+                    <h3>Anak Agung Gede Dipta Dananjaya</h3>
+                    <p class="role">32313</p>
+                    <p class="nim">No. Absen 02</p>
+                </div>
+
+                <div class="team-member">
+                    <img src="member/anra.jpg" class="member-picture">
+                    <h3>I Nyoman Anrasansya Dharma Putra</h3>
+                    <p class="role">32324</p>
+                    <p class="nim">No. Absen 13</p>
+                </div>
+
+                <div class="team-member">
+                    <img src="member/ori.png" class="member-picture">
+                    <h3>Made Oriont Fedora</h3>
+                    <p class="role">32335</p>
+                    <p class="nim">No. Absen 24</p>
+                </div>
+
+                <div class="team-member">
+                    <img src="member/abi.jpg" class="member-picture">
+                    <h3>Ni Nyoman Anugrah Dewiyani</h3>
+                    <p class="role">32347</p>
+                    <p class="nim">No. Absen 35</p>
+                </div>
+            </div>
+
+            <div class="project-info">
+                <p><strong>Kelas:</strong> XI RPL 1</p>
+                <p><strong>Tahun:</strong> 2025/2026</p>
+                <p><strong>Mata Pelajaran:</strong> Kompetensi Keahlian Pemograman Web</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tutorial Modal -->
+    <div class="modal-overlay" id="tutorialModal">
+        <div class="modal-box">
+            <button class="close-btn" onclick="closeModal('tutorialModal')">
+                X
+            </button>
+            
+            <div class="modal-header">
+                <h2>Cara Bermain</h2>
+                <p class="modal-subtitle">Panduan lengkap permainan</p>
+            </div>
+
+            <div class="tutorial-content">
+                <div class="tutorial-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Pilih Level Kesulitan</h3>
+                        <p>Pilih Easy (4 pasang), Medium (6 pasang), atau Hard (8 pasang)</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Klik Kartu untuk Membuka</h3>
+                        <p>Klik dua kartu untuk melihat gambar di baliknya</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Cocokkan Kartu yang Sama</h3>
+                        <p>Jika gambar sama, kartu akan tetap terbuka. Jika berbeda, kartu akan tertutup kembali</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Bangun Combo untuk Skor Tinggi</h3>
+                        <p>Match berturut-turut akan meningkatkan combo multiplier dan menambah skor lebih banyak</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Selesaikan Secepat Mungkin</h3>
+                        <p>Waktu dan jumlah langkah mempengaruhi skor akhir. Semakin cepat dan sedikit langkah, semakin tinggi bonus!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="landing.js"></script>
+</body>
+</html>

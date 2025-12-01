@@ -1,0 +1,15 @@
+.welcome-text {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 2rem;
+}
+.welcome-text span {
+    color: #22d3ee;
+}
+.logout-btn {
+    border-color: #ef4444;
+}
+.logout-btn:hover {
+    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+    border-color: #ef4444;
+}

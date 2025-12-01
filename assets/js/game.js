@@ -98,28 +98,28 @@ function playMelody(frequencies, noteDuration) {
 // Path gambar" kartu di setiap difficulty
 const animeImages = {
     easy: [
-        'images/image1.png',
-        'images/image2.png',
-        'images/image3.png',
-        'images/image4.png'
+        '../images/game/image1.png',
+        '../images/game/image2.png',
+        '../images/game/image3.png',
+        '../images/game/image4.png'
     ],
     medium: [
-        'images/image1.png',
-        'images/image2.png',
-        'images/image3.png',
-        'images/image4.png',
-        'images/image5.png',
-        'images/image6.png'
+        '../images/game/image1.png',
+        '../images/game/image2.png',
+        '../images/game/image3.png',
+        '../images/game/image4.png',
+        '../images/game/image5.png',
+        '../images/game/image6.png'
     ],
     hard: [
-        'images/image1.png',
-        'images/image2.png',
-        'images/image3.png',
-        'images/image4.png',
-        'images/image5.png',
-        'images/image6.png',
-        'images/image7.png',
-        'images/image8.png'
+        '../images/game/image1.png',
+        '../images/game/image2.png',
+        '../images/game/image3.png',
+        '../images/game/image4.png',
+        '../images/game/image5.png',
+        '../images/game/image6.png',
+        '../images/game/image7.png',
+        '../images/game/image8.png'
     ]
 };
 
@@ -374,7 +374,7 @@ function updateUI() {
 
 // End Game
 // selesaikan game
-function endGame() {
+async function endGame() {
     stopTimer();
     sounds.win();
     
@@ -385,14 +385,35 @@ function endGame() {
     
     gameState.score = finalScore;
     
+    // Update Tampilan Modal
     document.getElementById('finalScore').textContent = finalScore;
     document.getElementById('finalTime').textContent = timerEl.textContent;
     document.getElementById('finalMoves').textContent = gameState.moves;
     document.getElementById('finalCombo').textContent = `x${gameState.combo}`;
     
-
-    //hilangkan class hidden pada pop up menang, maka itu akan muncul
     winModal.classList.remove('hidden');
+
+    // --- LOGIC SIMPAN KE SUPABASE ---
+    const user = JSON.parse(localStorage.getItem('user_data'));
+    
+    if (user) {
+        const { error } = await _supabase
+            .from('leaderboard')
+            .insert([{
+                user_id: user.id,
+                username: user.username,
+                score: finalScore,
+                time: gameState.timer,
+                moves: gameState.moves,
+                difficulty: gameState.difficulty
+            }]);
+            
+        if (error) {
+            console.error("Gagal save score:", error);
+        } else {
+            console.log("Score saved!");
+        }
+    }
 }
 
 // Sound toggle
