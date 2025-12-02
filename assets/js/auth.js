@@ -63,8 +63,9 @@ if (registerForm) {
       if (signUpError) throw signUpError;
       
       // 3. Insert Username ke Tabel 'users' (Membuat Profil)
+      //jika data user tidak kosong
       if (signUpData.user) {
-                // Assign the entire returned object to 'userInsertResult'
+        // Assign the entire returned object to 'userInsertResult'
         const userInsertResult = await _supabase
           .from('users')
           .insert([
@@ -72,9 +73,13 @@ if (registerForm) {
             { id: signUpData.user.id, username: username } 
           ]);
         
-                // Access error property using dot notation
-                const userInsertError = userInsertResult.error;
-        if (userInsertError) throw userInsertError;
+        // Access error property using dot notation
+        const userInsertError = userInsertResult.error;
+        
+        if (userInsertError){
+          throw userInsertError;
+        }
+         
       }
 
       // Tangani Alur Konfirmasi Email
@@ -116,6 +121,7 @@ if (loginForm) {
                 email: email,
                 password: password,
             });
+        
 
             // Access properties using dot notation (authResult.data and authResult.error)
             const authData = authResult.data;

@@ -1,6 +1,14 @@
 import { _supabase, checkSession } from './config.js'; // <-- Tambahkan ini
 import { openLeaderboard } from './leaderboard.js'; // <--- TAMBAHKAN INI
 
+
+// QuerySelectorAll => metode untuk memilih elemen SEMUA HTML yang cocok 
+// dengan pemilih CSS yang diberikan, seperti ID, kelas, atau tag
+
+// QuerySelector => metode untuk memilih elemen HTML pertama yang cocok 
+// dengan pemilih CSS yang diberikan, seperti ID, kelas, atau tag
+
+
 // --- FUNGSI LOGOUT ---
 // Fungsi ini harus dideklarasikan di scope modul
 function handleLogout() {
