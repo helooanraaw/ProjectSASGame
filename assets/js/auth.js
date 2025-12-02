@@ -98,15 +98,20 @@ if (loginForm) {
 
         try {
             // 1. Supabase Auth Sign In
-            const { data: authData, error: authError } = await _supabase.auth.signInWithPassword({
+            // Assign the entire returned object to 'authResult'
+            const authResult = await _supabase.auth.signInWithPassword({
                 email: email,
                 password: password,
             });
 
+            // Access properties using dot notation (authResult.data and authResult.error)
+            const authData = authResult.data;
+            const authError = authResult.error;
+
             if (authError) {
                 throw new Error(authError.message === 'Invalid login credentials' 
-                                ? "Email atau Password salah!" 
-                                : authError.message);
+                                    ? "Email atau Password salah!" 
+                                    : authError.message);
             }
 
             // 2. Ambil data username dari tabel 'users'
@@ -114,20 +119,25 @@ if (loginForm) {
             // Ambil email dari authData.user untuk disimpan di LocalStorage
             const user_email = authData.user.email; 
             
-            const { data: userData, error: userError } = await _supabase
+            // Assign the entire returned object to 'userResult'
+            const userResult = await _supabase
                 .from('users')
                 .select('id, username') // Hanya perlu ID dan Username dari tabel 'users'
                 .eq('id', user_id)
                 .maybeSingle();
 
+            // Access properties using dot notation (userResult.data and userResult.error)
+            const userData = userResult.data;
+            const userError = userResult.error;
+
             if (userError) throw userError;
             if (!userData) throw new Error("Data pengguna tidak ditemukan di database!");
 
-            // 3. Simpan sesi lengkap (termasuk email dari authData)
+            // 3. Simpan sesi lengkap (termasuk email dari authData) ke localStorage
             localStorage.setItem('user_data', JSON.stringify({
                 id: userData.id,
                 username: userData.username,
-                email: user_email // Menggunakan email dari Auth data
+                email: user_email 
             }));
             
             // Redirect ke menu

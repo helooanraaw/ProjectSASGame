@@ -398,6 +398,7 @@ async function endGame() {
     winModal.classList.remove('hidden');
 
     // --- LOGIC SIMPAN KE SUPABASE ---
+    //Ambil user data dari localstorage
     const user = JSON.parse(localStorage.getItem('user_data'));
 
     if (user) {
