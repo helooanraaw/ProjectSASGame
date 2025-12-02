@@ -34,7 +34,7 @@ body {
     overflow: hidden; /* Mencegah scroll saat animasi */
 }
 
-.auth-container {
+.auth-container{ /*masuk, regis*/
     background: rgba(30, 41, 59, 0.95); /* Sedikit lebih pekat */
     padding: 45px 40px;
     border-radius: 16px;
@@ -49,13 +49,13 @@ body {
     /* cubic-bezier membuat gerakan 'set' yang enak dilihat */
 }
 
-.auth-title {
+.auth-title { /*masuk, regis*/
     margin-bottom: 30px;
     font-size: 1.8rem;
     color: #fff;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.5px; /* untuk jarak antar huruf */
 }
 
 .form-group {
