@@ -97,7 +97,7 @@ if (registerForm) {
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+        e.preventDefault(); //menghentikan reload halaman yang seharusnya di timbulkan oleh submit
         
         const email = document.getElementById('loginEmail').value.trim();
         const password = document.getElementById('loginPassword').value;
