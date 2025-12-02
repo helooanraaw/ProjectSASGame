@@ -403,11 +403,22 @@ async function endGame() {
 
     if (user) {
         // 1. Ambil Skor Lama (Hanya untuk membandingkan)
-        const { data: existingEntry, error: fetchError } = await _supabase
+        
+        // Perubahan: Menggunakan variabel 'fetchResult' dan mengakses properti .data dan .error
+        const fetchResult = await _supabase
             .from('leaderboard')
             .select('score')
             .eq('user_id', user.id)
             .maybeSingle(); // Gunakan maybeSingle agar tidak error jika tidak ada data
+
+        const existingEntry = fetchResult.data;
+        const fetchError = fetchResult.error;
+
+        // Penanganan error tetap sama
+        if (fetchError) {
+            console.error("Gagal mengambil skor lama:", fetchError);
+            // Lanjutkan eksekusi meskipun gagal fetch, asumsikan skor lama = 0
+        }
 
         const currentHighScore = existingEntry ? existingEntry.score : 0;
 
@@ -415,22 +426,24 @@ async function endGame() {
         if (finalScore > currentHighScore) {
             console.log("Melakukan UPSERT karena skor baru lebih tinggi!");
             
-            const { error: upsertError } = await _supabase
+            // Perubahan: Menggunakan variabel 'upsertResult' dan mengakses properti .error
+            const upsertResult = await _supabase
                 .from('leaderboard')
                 .upsert(
                     {
-                        user_id: user.id, // Ini adalah kunci konflik (Primary Key baru Anda)
-                        username: user.username, // Pertahankan kolom ini jika Anda tidak menghapusnya
+                        user_id: user.id, 
+                        username: user.username, 
                         score: finalScore,
                         time: gameState.timer,
                         moves: gameState.moves,
                     }, 
                     { 
                         onConflict: 'user_id' 
-                        // Jika user_id bentrok, update semua kolom yang diberikan di atas.
                     }
                 );
                 
+            const upsertError = upsertResult.error;
+
             if (upsertError) {
                 console.error("Gagal save high score:", upsertError);
             } else {

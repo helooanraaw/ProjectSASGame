@@ -5,76 +5,88 @@ import { _supabase } from './config.js';
 // =======================
 const registerForm = document.getElementById('registerForm');
 if (registerForm) {
-    registerForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const username = document.getElementById('regUsername').value.trim();
-        const email = document.getElementById('regEmail').value.trim();
-        const password = document.getElementById('regPassword').value;
-        const confirm = document.getElementById('regConfirmPassword').value;
-        const errorMsg = document.getElementById('regError');
-        const btn = document.querySelector('.auth-btn');
+  registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const username = document.getElementById('regUsername').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('regConfirmPassword').value;
+    const errorMsg = document.getElementById('regError');
+    const btn = document.querySelector('.auth-btn');
 
-        // Reset error display
-        errorMsg.style.display = 'none';
+    // Reset error display
+    errorMsg.style.display = 'none';
 
-        if (password !== confirm) {
-            errorMsg.textContent = "Password konfirmasi tidak cocok!";
-            errorMsg.style.display = 'block';
-            return;
-        }
+    if (password !== confirm) {
+      errorMsg.textContent = "Password konfirmasi tidak cocok!";
+      errorMsg.style.display = 'block';
+      return;
+    }
 
-        if (password.length < 6) {
-            errorMsg.textContent = "Password minimal 6 karakter!";
-            errorMsg.style.display = 'block';
-            return;
-        }
+    if (password.length < 6) {
+      errorMsg.textContent = "Password minimal 6 karakter!";
+      errorMsg.style.display = 'block';
+      return;
+    }
 
-        btn.textContent = 'Mendaftar...';
-        btn.disabled = true;
+    btn.textContent = 'Mendaftar...';
+    btn.disabled = true;
 
-        try {
-            // 1. Cek duplikat Username (Hanya diperlukan karena Supabase Auth tidak menangani unique username)
-            const { data: existing } = await _supabase
-                .from('users')
-                .select('id')
-                .eq('username', username);
-
-            if (existing && existing.length > 0) {
-                throw new Error("Username sudah dipakai!");
-            }
-
-            // 2. Supabase Auth Sign Up
-            const { data: signUpData, error: signUpError } = await _supabase.auth.signUp({
-                email: email,
-                password: password,
-            });
-
-            if (signUpError) throw signUpError;
+    try {
+      // 1. Cek duplikat Username 
+            // Assign the entire returned object to 'existingResult'
+      const existingResult = await _supabase
+        .from('users')
+        .select('id')
+        .eq('username', username);
             
-            // 3. Insert Username ke Tabel 'users' (Membuat Profil)
-            if (signUpData.user) {
-                const { error: userInsertError } = await _supabase
-                    .from('users')
-                    .insert([
-                        // ID UUID diambil dari Supabase Auth
-                        { id: signUpData.user.id, username: username } 
-                    ]);
-                
-                if (userInsertError) throw userInsertError;
-            }
+            // Access data property using dot notation
+            const existing = existingResult.data; 
 
-            // Tangani Alur Konfirmasi Email
-            alert("Pendaftaran BERHASIL! Silakan login dengan akun barumu.");
-            window.location.href = 'login.html'; 
+      if (existing && existing.length > 0) {
+        throw new Error("Username sudah dipakai!");
+      }
 
-        } catch (err) {
-            errorMsg.textContent = err.message;
-            errorMsg.style.display = 'block';
-            btn.textContent = 'Buat Akun';
-            btn.disabled = false;
-        }
-    });
+      // 2. Supabase Auth Sign Up
+            // Assign the entire returned object to 'signUpResult'
+      const signUpResult = await _supabase.auth.signUp({
+        email: email,
+        password: password,
+      });
+            
+            // Access properties using dot notation
+            const signUpData = signUpResult.data;
+            const signUpError = signUpResult.error;
+
+      if (signUpError) throw signUpError;
+      
+      // 3. Insert Username ke Tabel 'users' (Membuat Profil)
+      if (signUpData.user) {
+                // Assign the entire returned object to 'userInsertResult'
+        const userInsertResult = await _supabase
+          .from('users')
+          .insert([
+            // ID UUID diambil dari Supabase Auth
+            { id: signUpData.user.id, username: username } 
+          ]);
+        
+                // Access error property using dot notation
+                const userInsertError = userInsertResult.error;
+        if (userInsertError) throw userInsertError;
+      }
+
+      // Tangani Alur Konfirmasi Email
+      alert("Pendaftaran BERHASIL! Silakan login dengan akun barumu.");
+      window.location.href = 'login.html'; 
+
+    } catch (err) {
+      errorMsg.textContent = err.message;
+      errorMsg.style.display = 'block';
+      btn.textContent = 'Buat Akun';
+      btn.disabled = false;
+    }
+  });
 }
 
 
