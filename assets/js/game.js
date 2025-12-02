@@ -32,6 +32,7 @@ const sounds = {
     click: () => playTone(600, 0.05)
 };
 
+
 function playTone(frequency, duration) {
     //Kalau soundEnabled mati, batal
     if (!gameState.soundEnabled) return;
@@ -125,7 +126,10 @@ const animeImages = {
     ]
 };
 
+
 // Difficulty Settings
+//pairs = pasangan
+//cols = kolom
 const difficulties = {
     easy: { pairs: 4, cols: 4, bonus: 50 },
     medium: { pairs: 6, cols: 4, bonus: 100 },
@@ -341,6 +345,23 @@ function checkMatch() {
             }
             
             gameState.flippedCards = [];
+
+            // TANTANGAN BARU: Reset semua kartu yang sudah matched
+            // Hapus class 'flipped' dan 'matched' dari semua kartu yang telah matched
+            // gameState.matchedCards.forEach(cardId => {
+            //     const cardEl = document.querySelector(`[data-id="${cardId}"]`);
+            //     if (cardEl) {
+            //         cardEl.classList.remove('matched'); // Hilangkan status matched
+            //         cardEl.classList.remove('flipped'); // Tutup kembali
+            //         gameState.score = 0;
+            //         updateUI();
+            //     }
+            // });
+
+            // // 3. Kosongkan array matchedCards dan flippedCards
+            // gameState.matchedCards = [];
+            // gameState.flippedCards = [];
+
         }, 800);
     }
 }
@@ -420,6 +441,12 @@ async function endGame() {
             console.error("Gagal mengambil skor lama:", fetchError);
             // Lanjutkan eksekusi meskipun gagal fetch, asumsikan skor lama = 0
         }
+
+        // if(existingEntry){
+        //     currentHighScore = existingEntry.score
+        // }else{
+        //     currentHighScore = 0
+        // }
 
         const currentHighScore = existingEntry ? existingEntry.score : 0;
 
