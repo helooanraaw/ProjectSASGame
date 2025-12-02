@@ -9,6 +9,25 @@ import { openLeaderboard } from './leaderboard.js'; // <--- TAMBAHKAN INI
 // dengan pemilih CSS yang diberikan, seperti ID, kelas, atau tag
 
 
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+function playSound(frequency, duration) {
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.value = frequency;
+    oscillator.type = 'sine';
+    
+    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + duration);
+}
+
 // --- FUNGSI LOGOUT ---
 // Fungsi ini harus dideklarasikan di scope modul
 function handleLogout() {
@@ -100,8 +119,6 @@ document.querySelectorAll('.modal-overlay').forEach(modal => {
 });
 
 // Button hover sounds
-// QuerySelectorAll => metode untuk memilih elemen SEMUA HTML yang cocok 
-// dengan pemilih CSS yang diberikan, seperti ID, kelas, atau tag
 document.querySelectorAll('.menu-btn').forEach(btn => {
     btn.addEventListener('mouseenter', () => {
         playSound(500, 0.05);

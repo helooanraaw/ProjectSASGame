@@ -20,6 +20,27 @@ function playSound(frequency, duration) {
     oscillator.stop(audioContext.currentTime + duration);
 }
 
+function activateAudioContext() {
+    // Memeriksa jika context dalam status 'suspended'
+    if (audioContext && audioContext.state === 'suspended') {
+        audioContext.resume().then(() => {
+            console.log('AudioContext aktif. Suara sekarang bisa diputar.');
+        });
+    }
+    
+    // Hapus listener ini setelah berhasil dijalankan agar hanya terjadi sekali
+    document.removeEventListener('click', activateAudioContext);
+    document.removeEventListener('keydown', activateAudioContext);
+}
 
+// Tambahkan listener untuk mendeteksi KLIK atau KEYDOWN di mana saja pada dokumen
+document.addEventListener('click', activateAudioContext);
+document.addEventListener('keydown', activateAudioContext);
+
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+        playSound(500, 0.05);
+    });
+});
 
 
