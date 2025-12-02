@@ -19,3 +19,7 @@ function playSound(frequency, duration) {
     oscillator.start(audioContext.currentTime);
     oscillator.stop(audioContext.currentTime + duration);
 }
+
+
+
+

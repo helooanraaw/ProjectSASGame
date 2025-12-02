@@ -58,8 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Pastikan tombol leaderboard juga dikaitkan
     const leaderboardBtn = document.querySelector('.menu-btn.leaderboard-btn');
     if (leaderboardBtn){
-        leaderboardBtn.addEventListener('click', openLeaderboard);
+        leaderboardBtn.addEventListener('click', showLeaderboardModal);
     } 
+
+
 });
 
 // --- FUNGSI MODAL (pop up) ---
@@ -81,20 +83,41 @@ function showTutorialModal() {
     }
 }
 
-// Fungsi Generic untuk menutup modal apapun
-function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if(modal) {
-        modal.classList.remove('active');
-        if(typeof playSound === 'function') playSound(400, 0.1);
-    }
+function showLeaderboardModal() {
+    openLeaderboard();
+    if(typeof playSound === 'function') playSound(600, 0.1); 
 }
 
-// Menutup modal jika user klik di area gelap (overlay)
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-    overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) {
-            overlay.classList.remove('active');
+// Close modal when clicking outside
+// QuerySelectorAll => metode untuk memilih elemen SEMUA HTML yang cocok 
+// dengan pemilih CSS yang diberikan, seperti ID, kelas, atau tag
+document.querySelectorAll('.modal-overlay').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal(modal.id);
         }
     });
 });
+
+// Button hover sounds
+// QuerySelectorAll => metode untuk memilih elemen SEMUA HTML yang cocok 
+// dengan pemilih CSS yang diberikan, seperti ID, kelas, atau tag
+document.querySelectorAll('.menu-btn').forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+        playSound(500, 0.05);
+    });
+});
+
+function closeModal(modalId) {
+    playSound(400, 0.1);
+    const modal = document.getElementById(modalId);
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+
+
+
+window.closeModal = closeModal;
+// Daftarkan fungsi closeModal (yang hidup di dalam module menu.js) ke global (window), 
+// supaya bisa dipanggil dari HTML.

@@ -479,6 +479,8 @@ async function endGame() {
 
 // Sound toggle
 soundBtn.addEventListener('click', () => {
+    // Jika nyala -> Matikan
+    // Jika mati -> Nyalakan
     gameState.soundEnabled = !gameState.soundEnabled;
     sounds.click();
     
@@ -498,16 +500,23 @@ soundBtn.addEventListener('click', () => {
     }
 });
 
-// Event Listeners
+// Event Listeners untuk restart game
 restartBtn.addEventListener('click', initGame);
 playAgainBtn.addEventListener('click', initGame);
 
+// Tombol set difficulty
+// Untuk setiap tombol difficulty berikan event listener click
 difficultyBtns.forEach(btn => {
     btn.addEventListener('click', () => {
+        // Mainkan suara click
         sounds.click();
+        // Hilangkan class active dari semua tombol difficulty
         difficultyBtns.forEach(b => b.classList.remove('active'));
+        // tambahkan class active di tombol difficulty yang ditekan
         btn.classList.add('active');
+        //set difficulty 
         gameState.difficulty = btn.dataset.difficulty;
+        //restart game
         initGame();
     });
 });
