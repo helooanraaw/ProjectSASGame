@@ -40,9 +40,10 @@ if (registerForm) {
         .from('users')
         .select('id')
         .eq('username', username);
+      //SELECT id FROM users WHERE username = username
             
-            // Access data property using dot notation
-            const existing = existingResult.data; 
+      // Access data property using dot notation
+      const existing = existingResult.data; 
 
       if (existing && existing.length > 0) {
         throw new Error("Username sudah dipakai!");
@@ -55,9 +56,9 @@ if (registerForm) {
         password: password,
       });
             
-            // Access properties using dot notation
-            const signUpData = signUpResult.data;
-            const signUpError = signUpResult.error;
+      // Access properties using dot notation
+      const signUpData = signUpResult.data;
+      const signUpError = signUpResult.error;
 
       if (signUpError) throw signUpError;
       
@@ -137,6 +138,7 @@ if (loginForm) {
                 .select('id, username') // Hanya perlu ID dan Username dari tabel 'users'
                 .eq('id', user_id)
                 .maybeSingle();
+            //SELECT id, username FROM users WHERE id = user_id (cari hanya satu -> maybeSingle())
 
             // Access properties using dot notation (userResult.data and userResult.error)
             const userData = userResult.data;

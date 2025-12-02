@@ -22,12 +22,15 @@ function handleLogout() {
 // Cek sesi login saat halaman dimuat
 document.addEventListener('DOMContentLoaded', () => {
     // Tampilkan username
+    // cek config.js untuk informasi lebih lanjut tentang checkSession
     const user = checkSession(); 
+
+    //set displayUsername menjadi username user
     if (user) {
         document.getElementById('displayUsername').textContent = user.username;
     }
 
-    // *** SOLUSI: Kaitkan fungsi handleLogout ke tombol ***
+    // tambahkan event listener click untuk tombol button
     const logoutButton = document.getElementById('logoutBtn');
     if (logoutButton) {
         logoutButton.addEventListener('click', handleLogout);
@@ -35,17 +38,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Anda juga harus mengaitkan fungsi modal di sini
     const teamBtn = document.querySelector('.menu-btn.info-btn');
-    if (teamBtn) teamBtn.addEventListener('click', showTeamModal);
+    if (teamBtn){ 
+        teamBtn.addEventListener('click', showTeamModal);
+    }
 
     const tutorialBtn = document.querySelector('.menu-btn.tutorial-btn');
-    if (tutorialBtn) tutorialBtn.addEventListener('click', showTutorialModal);
+    if (tutorialBtn){
+        tutorialBtn.addEventListener('click', showTutorialModal);
+    }
 
     // Pastikan tombol leaderboard juga dikaitkan
     const leaderboardBtn = document.querySelector('.menu-btn.leaderboard-btn');
-    if (leaderboardBtn) leaderboardBtn.addEventListener('click', openLeaderboard);
+    if (leaderboardBtn){
+        leaderboardBtn.addEventListener('click', openLeaderboard);
+    } 
 });
 
-// --- FUNGSI MODAL ---
+// --- FUNGSI MODAL (pop up) ---
 
 function showTeamModal() {
     const modal = document.getElementById('teamModal');

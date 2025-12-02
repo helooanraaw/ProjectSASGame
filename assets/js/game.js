@@ -399,7 +399,7 @@ async function endGame() {
 
     // --- LOGIC SIMPAN KE SUPABASE ---
     //Ambil user data dari localstorage
-    const user = JSON.parse(localStorage.getItem('user_data'));
+    const user = checkSession();
 
     if (user) {
         // 1. Ambil Skor Lama (Hanya untuk membandingkan)
@@ -410,6 +410,7 @@ async function endGame() {
             .select('score')
             .eq('user_id', user.id)
             .maybeSingle(); // Gunakan maybeSingle agar tidak error jika tidak ada data
+        //SELECT score FROM leaderboard WHERE user_id = user.id (hanya 1)
 
         const existingEntry = fetchResult.data;
         const fetchError = fetchResult.error;
@@ -441,6 +442,26 @@ async function endGame() {
                         onConflict: 'user_id' 
                     }
                 );
+            //Dalam analogi SQL===================================
+            // INSERT INTO leaderboard (user_id, username, score, time, moves)
+            // VALUES (
+            //     'user.id', 
+            //     'user.username', 
+            //     finalScore, 
+            //     gameState.timer, 
+            //     gameState.moves
+            // )
+            // ON CONFLICT (user_id)  -- This targets the column specified by { onConflict: 'user_id' }
+            // DO UPDATE SET
+            //     username = EXCLUDED.username, -- EXCLUDED refers to the value provided in the INSERT part
+            //     score    = EXCLUDED.score,
+            //     time     = EXCLUDED.time,
+            //     moves    = EXCLUDED.moves;
+
+            //Note : Basically insert user.id, user.username, finalscore, timer dan moves
+            //ke leaderboard. namun kalau ternyata di dalam leaderboard sudah ada
+            //user id yang sama maka update saja username, score, time dan moves
+            //di yang sudah ada tanpa memasukkan data baru
                 
             const upsertError = upsertResult.error;
 

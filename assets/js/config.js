@@ -9,6 +9,16 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 // _supabase adalah “koneksi ke database”.
 export const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+
+//Local Storage adalah fitur pada peramban web (browser) yang memungkinkan 
+// aplikasi web Anda menyimpan data dalam jumlah kecil secara permanen di 
+// sisi klien (komputer atau perangkat pengguna).
+
+//Data yang disimpan dalam local storage berbentuk string, maka dari itu saat diambil
+//harus menggunakan JSON.parse agar terubak menjadi objek javascript yang bisa
+//digunakan 
+// - Oriont note
+
 // Fungsi Utility untuk cek login
 export function checkSession() {
     const user = localStorage.getItem('user_data');

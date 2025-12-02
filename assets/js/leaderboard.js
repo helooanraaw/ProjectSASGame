@@ -19,6 +19,8 @@ async function loadLeaderboard() {
     .select('*')
     .order('score', { ascending: false }) // Urutkan dari score terbesar
     .limit(10); // Ambil 10 aja
+    
+    //SELECT * FROM leaderboard SORT BY score ASCENDING LIMIT (10)
 
     // Mengakses properti menggunakan dot notation (result.data dan result.error)
     const data = result.data;
