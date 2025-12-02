@@ -1,3 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 50%, #0a0e1a 100%);
+    min-height: 100vh;
+    color: #fff;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Landing Container */
+.landing-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Hero Section */
+.hero-section {
+    text-align: center;
+    max-width: 700px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
 /* --- Banner Profil User (Versi Teks Simpel) --- */
 .user-profile-banner {
     display: flex;
@@ -16,7 +51,7 @@
     max-width: 480px; 
     margin: 20px auto 40px auto; /* Jarak dari judul dan tombol */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    animation: fadeInDown 0.6s ease-out;
+    /* animation: fadeInDown 0.6s ease-out; */
 }
 
 .user-greeting {
@@ -39,7 +74,6 @@
     color: #fff;
     font-weight: 700;
     letter-spacing: 0.5px;
-    text-transform: capitalize;
 }
 
 /* Indikator Online */
@@ -68,22 +102,153 @@
     100% { opacity: 1; }
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 50%, #0a0e1a 100%);
-    min-height: 100vh;
-    color: #fff;
-    overflow-x: hidden;
+/* Title */
+.main-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+    background: linear-gradient(90deg, #22d3ee, #3b82f6, #8b5cf6, #22d3ee);
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: titleShine 5s linear infinite;
+    text-shadow: 0 0 40px rgba(34, 211, 238, 0.3);
+}
+
+@keyframes titleShine {
+    to { background-position: 300% center; }
+}
+
+.main-subtitle {
+    font-size: 1.2rem;
+    color: #94a3b8;
+    margin-bottom: 50px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* Menu Buttons */
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    /* margin-bottom: 30px; */
+}
+
+.menu-btn {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border: 2px solid #334155;
+    color: #e2e8f0;
+    padding: 18px 40px;
+    border-radius: 14px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+
+    /* agar efek hover tidak instan */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-decoration: none;
     position: relative;
+
+    /* agar efek shining pakai ::before bisa di hide */
+    overflow: hidden;
+
+    letter-spacing: 1px;
 }
 
-/* Back Button */
+/* ::before digunakan untuk memasukkan konten kedalam
+menu-btn ini sebelum konten aslinya */
+.menu-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.menu-btn:hover::before {
+    left: 100%;
+}
+
+.menu-btn:hover {
+    /* button di naikkan sedikit */
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Play Button */
+.play-btn {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    border-color: #22d3ee;
+    box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
+    font-size: 1.3rem;
+    padding: 22px 50px;
+}
+
+.play-btn:hover {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    box-shadow: 0 8px 35px rgba(14, 165, 233, 0.6);
+}
+
+/* Leaderboard Button */
+.leaderboard-btn {
+    border-color: #faf88b;
+}
+
+.leaderboard-btn:hover {
+    background: linear-gradient(135deg, #ffbc51 0%, #ffa514 100%);
+    border-color: #faf88b;
+    box-shadow: 0 8px 30px rgba(246, 210, 92, 0.4);
+}
+
+/* Info Button */
+.info-btn {
+    border-color: #a78bfa;
+}
+
+.info-btn:hover {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    border-color: #a78bfa;
+    box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+}
+
+/* Tutorial Button */
+.tutorial-btn {
+    border-color: #10b981;
+}
+
+.tutorial-btn:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border-color: #10b981;
+    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);
+}
+
+/* ================Akhir dari style Landing-container beserta konten" nya====================*/
+
+/* Back Button
 .back-btn {
     position: fixed;
     top: 20px;
@@ -127,7 +292,7 @@ body {
         font-size: 0.85rem;
     }
     
-}
+} */
 
 /* Particles */
 .particles {
@@ -163,152 +328,61 @@ body {
     }
 }
 
-/* Landing Container */
-.landing-container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    position: relative;
-    z-index: 1;
-}
+/* ============STYLE UNTUK MODAL-OVERLAY DAN ISI ISINYAMULAI DISINI */
 
-/* Hero Section */
-.hero-section {
-    text-align: center;
-    max-width: 700px;
-    animation: fadeInUp 0.8s ease-out;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Logo */
-.logo-wrapper {
-    margin-bottom: 35px;
-}
-
-
-/* Title */
-.main-title {
-    font-size: 3.5rem;
-    font-weight: 900;
-    letter-spacing: 3px;
-    margin-bottom: 15px;
-    background: linear-gradient(90deg, #22d3ee, #3b82f6, #8b5cf6, #22d3ee);
-    background-size: 300% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: titleShine 5s linear infinite;
-    text-shadow: 0 0 40px rgba(34, 211, 238, 0.3);
-}
-
-@keyframes titleShine {
-    to { background-position: 300% center; }
-}
-
-.main-subtitle {
-    font-size: 1.2rem;
-    color: #94a3b8;
-    margin-bottom: 50px;
-    font-weight: 500;
-    letter-spacing: 1px;
-}
-
-/* Menu Buttons */
-.menu-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    margin-bottom: 60px;
-}
-
-.menu-btn {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-    border: 2px solid #334155;
-    color: #e2e8f0;
-    padding: 18px 40px;
-    border-radius: 14px;
-    font-size: 1.1rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-    letter-spacing: 1px;
-}
-
-
-.menu-btn::before {
-    content: '';
-    position: absolute;
+/* Modal */
+/* overlay adalah background di belakang modal yang tidak terlihat */
+.modal-overlay {
+    position: fixed;
     top: 0;
-    left: -100%;
+    left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.5s;
+    background: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    animation: modalFade 0.3s ease;
 }
 
-.menu-btn:hover::before {
-    left: 100%;
+.modal-overlay.active {
+    display: flex;
 }
 
-.menu-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+@keyframes modalFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-/* Play Button */
-.play-btn {
-    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-    border-color: #22d3ee;
-    box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
-    font-size: 1.3rem;
-    padding: 22px 50px;
+.modal-box {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    border: 1px solid rgba(34, 211, 238, 0.3);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 650px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+
+    /* animasi masuk modal */
+    animation: modalSlide 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.play-btn:hover {
-    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-    box-shadow: 0 8px 35px rgba(14, 165, 233, 0.6);
-}
-
-/* Info Button */
-.info-btn {
-    border-color: #a78bfa;
-}
-
-.info-btn:hover {
-    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
-    border-color: #a78bfa;
-    box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
-}
-
-/* Tutorial Button */
-.tutorial-btn {
-    border-color: #10b981;
-}
-
-.tutorial-btn:hover {
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
-    border-color: #10b981;
-    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);
+@keyframes modalSlide {
+    from {
+        transform: translateY(60px) scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
 }
 
 /* Features */
@@ -345,84 +419,14 @@ body {
     text-align: center;
 }
 
-/* Modal */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    padding: 20px;
-    animation: modalFade 0.3s ease;
-}
 
-.modal-overlay.active {
-    display: flex;
-}
-
-@keyframes modalFade {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.modal-box {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-    border: 2px solid #334155;
-    border-radius: 20px;
-    padding: 40px;
-    max-width: 650px;
-    width: 100%;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    animation: modalSlide 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-@keyframes modalSlide {
-    from {
-        transform: translateY(60px) scale(0.9);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-    }
-}
-
-.close-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: rgba(51, 65, 85, 0.6);
-    border: 1px solid #475569;
-    color: #e2e8f0;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.close-btn:hover {
-    background: #dc2626;
-    border-color: #ef4444;
-    transform: rotate(90deg);
-}
 
 /* Modal Header */
 .modal-header {
     text-align: center;
     margin-bottom: 35px;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -633,30 +637,39 @@ body {
 }
 
 /* --- Perbaikan Style Modal (Agar Lebih Interaktif) --- */
-.modal-overlay {
+/* .modal-overlay {
     background: rgba(0, 0, 0, 0.85);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
-    z-index: 9999; /* Pastikan di atas segalanya */
-}
-
-.modal-box {
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    border: 1px solid rgba(34, 211, 238, 0.3);
-}
+    z-index: 999
+} */
 
 /* Tombol close yang lebih besar agar mudah dipencet */
 .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
     width: 44px;
     height: 44px;
+    color: white;
     font-size: 1.2rem;
     background: rgba(239, 68, 68, 0.2);
-    border-color: rgba(239, 68, 68, 0.5);
+    border: 1px solid rgba(239, 68, 68, 0.5);
 }
 .close-btn:hover {
     background: rgba(239, 68, 68, 0.8);
     color: white;
+    border-color: #ef4444;
+    transform: rotate(90deg);
 }
+
+
 
 /* Scrollbar */
 .modal-box::-webkit-scrollbar {
