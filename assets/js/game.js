@@ -1,6 +1,9 @@
 // game.js (Baris Paling Atas)
 import { _supabase, checkSession } from './config.js'; // <--- BARIS INI HILANG DARI KODE ANDA YANG BARU
 // Game State
+
+
+
 let gameState = {
     cards: [],
     flippedCards: [],
@@ -285,6 +288,8 @@ function handleCardClick(card) {
     }
 }
 
+
+
 // Check if cards match
 function checkMatch() {
     //dengan array destructuring, dapatkan kartu 1 dan 2 di flippedCard
@@ -346,8 +351,8 @@ function checkMatch() {
             
             gameState.flippedCards = [];
 
-            // TANTANGAN BARU: Reset semua kartu yang sudah matched
-            // Hapus class 'flipped' dan 'matched' dari semua kartu yang telah matched
+            // // TANTANGAN BARU: Reset semua kartu yang sudah matched
+            // // Hapus class 'flipped' dan 'matched' dari semua kartu yang telah matched
             // gameState.matchedCards.forEach(cardId => {
             //     const cardEl = document.querySelector(`[data-id="${cardId}"]`);
             //     if (cardEl) {
@@ -564,3 +569,77 @@ document.addEventListener('DOMContentLoaded', () => {
     createParticles();
     initGame();
 });
+
+
+//Kode cadangan
+
+//================KODE UNTUK PREVIEW DULU DI AWAL======================
+// // Handle Card Click
+// // function ketika sebuah card di click
+// function handleCardClick(card) {
+//     // HANDLE CLICK UNTUK KALAU MAU PREVIEW DI AWAL
+
+//     // ⭐️ PERUBAHAN KRUSIAL DI SINI:
+//     // Jika game belum dimulai, JANGAN flip kartu, tapi PANGGIL PREVIEW.
+//     if (!gameState.gameStarted) {
+//         // Panggil fungsi preview
+//         startPreview(); 
+//         // Hentikan function agar kartu yang baru diklik TIDAK ter-flip
+//         return; 
+//     }
+    
+//     //pilih elemen html yang merepresentasikan kartu yang di klik
+//     const cardEl = document.querySelector(`[data-id="${card.id}"]`);
+    
+//     if (
+//         gameState.flippedCards.length === 2 ||
+//         gameState.flippedCards.includes(card.id) ||
+//         gameState.matchedCards.includes(card.id)
+//     ) {
+//         return;
+//     }
+    
+//     sounds.flip();
+//     //Mainkan animasi flip pada kartu
+//     cardEl.classList.add('flipped');
+//     gameState.flippedCards.push(card.id);
+
+
+//     //jika setelah kartu ini di tambahkan ke flippedCard dan 
+//     //flippedCard jadinya isi 2 maka increment moves dan cek apakah matching
+//     if (gameState.flippedCards.length === 2) {
+//         gameState.moves++;
+//         movesEl.textContent = gameState.moves;
+//         checkMatch();
+//     }
+// }
+
+
+// // --- Fungsi Baru untuk Preview Kartu ---
+// function startPreview() {
+//     // 1. Tampilkan semua kartu (dengan menambahkan class 'flipped' ke SEMUA kartu)
+//     const allCards = document.querySelectorAll('.card');
+//     allCards.forEach(cardEl => {
+//         cardEl.classList.add('flipped');
+//     });
+
+//     // 2. Nonaktifkan klik selama preview
+//     gameGrid.style.pointerEvents = 'none';
+
+//     // 3. Atur timer untuk menutup kartu kembali
+//     setTimeout(() => {
+//         // Tutup kembali semua kartu (hapus class 'flipped')
+//         allCards.forEach(cardEl => {
+//             // JANGAN menghapus class 'matched' jika sudah ada,
+//             // tapi karena ini di awal game, semua kartu belum matched.
+//             cardEl.classList.remove('flipped'); 
+//         });
+
+//         // 4. Aktifkan klik, mulai timer, dan set gameStarted menjadi true
+//         gameGrid.style.pointerEvents = 'auto';
+//         startTimer();
+//         gameState.gameStarted = true;
+        
+//     }, 1000); // Tunda 2 detik (2000ms) untuk preview
+// }
+//=================================================================================
