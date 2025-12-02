@@ -12,21 +12,50 @@ import { openLeaderboard } from './leaderboard.js'; // <--- TAMBAHKAN INI
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
 function playSound(frequency, duration) {
+    
+    // Membuat OscillatorNode. Ini adalah sumber suara (generator gelombang). 
+    // Objek inilah yang secara matematis menghasilkan gelombang suara.
     const oscillator = audioContext.createOscillator();
+
+    //Membuat GainNode. Ini bertindak sebagai pengatur volume (atau gain) 
+    // dalam jalur audio.
     const gainNode = audioContext.createGain();
     
+
+    //Menghubungkan keluaran suara dari oscillator (sumber suara) ke 
+    //masukan dari gainNode (pengatur volume).
     oscillator.connect(gainNode);
+
+    //Menghubungkan keluaran suara dari gainNode ke tujuan akhir suara
+    //yaitu speaker / headphone komputer 
     gainNode.connect(audioContext.destination);
     
+
+    //Mengatur nilai frekuensi (pitch) dari osilator sesuai 
+    // dengan nilai parameter frequency yang diberikan.
     oscillator.frequency.value = frequency;
+
+    //set tipe gelombang ke gelombang sinus
+    //Gelombang sinus menghasilkan nada murni atau beep yang lembut.
     oscillator.type = 'sine';
     
-    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+
+    //Mengatur volume awal suara menjadi 0.3 (dari maksimal 1.0) tepat pada waktu saat ini
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+
+    //Ini memerintahkan volume untuk menurun secara eksponensial (halus) 
+    // dari nilai saat ini (0.3) ke 0.01 dalam waktu selama duration. (fade out)
     gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
     
+
+    //Memerintahkan osilator untuk mulai menghasilkan suara segera pada waktu saat ini.
     oscillator.start(audioContext.currentTime);
+
+    //Memerintahkan osilator untuk menghentikan suara setelah waktu duration berlalu
     oscillator.stop(audioContext.currentTime + duration);
 }
+
+
 
 // --- FUNGSI LOGOUT ---
 // Fungsi ini harus dideklarasikan di scope modul
