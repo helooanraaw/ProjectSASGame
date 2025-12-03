@@ -24,7 +24,25 @@
 body {
     font-family: 'Poppins', sans-serif;
     /* Background gelap sederhana */
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background-image: url('/images/other/image.png'); /* Ganti path ini! */
+    
+    /* 2. Sesuaikan Ukuran Gambar */
+    background-size: cover; 
+    
+    /* 3. Atur Posisi */
+    background-position: center center;
+    
+    /* 4. Cegah Pengulangan Gambar */
+    background-repeat: no-repeat;
+    
+    /* 5. Jaga Agar Gambar Tetap (Opsional) */
+    background-attachment: fixed; 
+    
+    /* 6. Tambahkan Warna Fallback/Overlay Gelap (PENTING) */
+    /* Ini untuk membantu teks putih Anda tetap terbaca dan memberikan fallback jika gambar gagal dimuat */
+    background-color: #0a0e1a; 
+    
+    /* ------------------------------------- */
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -34,11 +52,24 @@ body {
     overflow: hidden; /* Mencegah scroll saat animasi */
 }
 
+
+body::before {
+    content: '';
+    position: fixed; /* atau absolute jika body tidak memenuhi seluruh viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gunakan rgba untuk membuat warna hitam/gelap transparan */
+    background-color: rgba(148, 100, 146, 0.75); /* Hitam dengan transparansi 60% */
+    z-index: -1; /* Posisikan di bawah game-container tapi di atas background */
+}
+
 .auth-container{ /*masuk, regis*/
-    background: rgba(30, 41, 59, 0.95); /* Sedikit lebih pekat */
+    background-color: #b923aa8a;
     padding: 45px 40px;
     border-radius: 16px;
-    border: 1px solid #334155;
+    border: 4px solid white;
     width: 100%;
     max-width: 420px;
     text-align: center;

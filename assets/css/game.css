@@ -6,7 +6,28 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 50%, #0a0e1a 100%);
+/* --- PENGATURAN BACKGROUND BARU --- */
+    
+    /* 1. Muat Gambar */
+    background-image: url('/images/other/image.png'); /* Ganti path ini! */
+    
+    /* 2. Sesuaikan Ukuran Gambar */
+    background-size: cover; 
+    
+    /* 3. Atur Posisi */
+    background-position: center center;
+    
+    /* 4. Cegah Pengulangan Gambar */
+    background-repeat: no-repeat;
+    
+    /* 5. Jaga Agar Gambar Tetap (Opsional) */
+    background-attachment: fixed; 
+    
+    /* 6. Tambahkan Warna Fallback/Overlay Gelap (PENTING) */
+    /* Ini untuk membantu teks putih Anda tetap terbaca dan memberikan fallback jika gambar gagal dimuat */
+    background-color: #0a0e1a; 
+    
+    /* ------------------------------------- */
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -17,15 +38,27 @@ body {
     position: relative;
 }
 
+body::before {
+    content: '';
+    position: fixed; /* atau absolute jika body tidak memenuhi seluruh viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gunakan rgba untuk membuat warna hitam/gelap transparan */
+    background-color: rgba(148, 100, 146, 0.75); /* Hitam dengan transparansi 60% */
+    z-index: -1; /* Posisikan di bawah game-container tapi di atas background */
+}
+
 /* Back Button */
 .back-btn {
     position: fixed;
     top: 20px;
     left: 20px;
-    background: rgba(15, 23, 42, 0.9);
+    background: #ff0000e6;
    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
-    border: 1px solid #334155;
+    border: 1px solid #ff3e3e;
     color: #e2e8f0;
     padding: 12px 20px;
     border-radius: 10px;
@@ -42,8 +75,8 @@ body {
 }
 
 .back-btn:hover {
-    background: rgba(30, 41, 59, 0.95);
-    border-color: #22d3ee;
+    background: #ff0000e6;
+    border: 1px solid #e40000e6;
     transform: translateX(-5px);
     box-shadow: 0 6px 20px rgba(34, 211, 238, 0.3);
 }
@@ -105,6 +138,20 @@ body {
     max-width: 900px;
     position: relative;
     z-index: 1;
+
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        /* shift posisi */
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        /* shift posisi */
+        transform: translateY(0);
+    }
 }
 
 /* Header & Logo */
@@ -140,7 +187,7 @@ body {
     font-size: 2.6rem;
     font-weight: 800;
     letter-spacing: 2px;
-    background: linear-gradient(90deg, #22d3ee, #3b82f6, #22d3ee);
+    background: linear-gradient(90deg, #ffffff, #ffdbfe, #ffe0fe);
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -153,7 +200,7 @@ body {
 }
 
 .game-subtitle {
-    color: #64748b;
+    color: #ffffff;
     font-size: 0.85rem;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -162,9 +209,9 @@ body {
 
 /* Stats Container */
 .stats-container {
-    background: rgba(15, 23, 42, 0.85);
+    background: linear-gradient(135deg, #c229a3 0%, #d86ec3 100%);
     /* backdrop-filter: blur(12px); */
-    border: 1px solid rgba(51, 65, 85, 0.6);
+    border: 4px solid rgba(255, 255, 255);
     border-radius: 14px;
     padding: 22px;
     margin-bottom: 25px;
@@ -195,7 +242,7 @@ body {
 
 .stat-label {
     font-size: 0.7rem;
-    color: #94a3b8;
+    color: #ffffff;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -207,7 +254,24 @@ body {
     color: #fff;
 }
 
-.restart-btn, .sound-btn {
+.restart-btn {
+    background-color: rgb(255, 255, 255);
+    color: #8b0089;
+    border: 2px solid #ff00fb;
+    padding: 11px 22px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sound-btn {
     background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
     color: #e2e8f0;
     border: 1px solid #475569;
@@ -224,7 +288,14 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.restart-btn:hover, .sound-btn:hover {
+.restart-btn:hover {
+    background-color: rgb(255, 192, 235);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+
+.sound-btn:hover {
     background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -252,7 +323,7 @@ body {
 }
 
 .sound-btn.active {
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    background: linear-gradient(135deg, #0ac388 0%, #08aa7c 100%);
     border-color: #10b981;
 }
 
@@ -304,6 +375,7 @@ body {
     margin: 0 auto 28px;
     max-width: 480px;
     perspective: 1200px;
+    animation: fadeInUp 0.8s ease-out;
 }
 
 
@@ -363,10 +435,10 @@ body {
     -ms-user-select: none;     /* IE/Edge */
     user-select: none;         /* Standard */
     
-    background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
-    border: 2px solid #475569;
+    background: linear-gradient(135deg, #f036cb 0%, #ff81e6 100%);
+    border: 4px solid #ffffff;
     font-size: 2.2rem;
-    color: #838383;
+    color: #ffffff;
     font-weight: 700;
 }
 
@@ -376,8 +448,9 @@ body {
 }
 
 .card-front {
-    background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
-    border: 2px solid #94a3b8;
+    background: linear-gradient(135deg, #f036cb 0%, #ff81e6 100%);
+    color: #ffffff;
+    border: 4px solid #f036cb;
     transform: rotateY(180deg);
 }
 
