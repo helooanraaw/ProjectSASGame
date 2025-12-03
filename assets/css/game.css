@@ -306,6 +306,8 @@ body {
     perspective: 1200px;
 }
 
+
+/* mengatur kolom */
 .grid-container.easy { grid-template-columns: repeat(4, 1fr); }
 .grid-container.medium { grid-template-columns: repeat(4, 1fr); }
 .grid-container.hard { grid-template-columns: repeat(4, 1fr); }

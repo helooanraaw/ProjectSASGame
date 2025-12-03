@@ -2,6 +2,25 @@ import { _supabase, checkSession } from './config.js'; // <-- Tambahkan ini
 import { openLeaderboard } from './leaderboard.js'; // <--- TAMBAHKAN INI
 
 
+// Initialize Particles
+function createParticles() {
+    for (let i = 0; i < 20; i++) {
+        //buat element div di dom
+        const particle = document.createElement('div');
+        //beri kelas particle
+        particle.className = 'particle';
+        //set posisi X random
+        particle.style.left = Math.random() * 100 + '%';
+        //set delay animasi random
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        //set durasi animasi random (diatas 10 detik)
+        particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+        //masukkan particle ke dalam div particles
+        particles.appendChild(particle);
+    }
+}
+
+
 // QuerySelectorAll => metode untuk memilih elemen SEMUA HTML yang cocok 
 // dengan pemilih CSS yang diberikan, seperti ID, kelas, atau tag
 
@@ -80,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tampilkan username
     // cek config.js untuk informasi lebih lanjut tentang checkSession
     const user = checkSession(); 
+    createParticles()
 
     //set displayUsername menjadi username user
     if (user) {

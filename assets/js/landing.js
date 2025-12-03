@@ -31,11 +31,13 @@ function activateAudioContext() {
     // Hapus listener ini setelah berhasil dijalankan agar hanya terjadi sekali
     document.removeEventListener('click', activateAudioContext);
     document.removeEventListener('keydown', activateAudioContext);
+    document.removeEventListener('DOMContentLoaded', activateAudioContext);
 }
 
 // Tambahkan listener untuk mendeteksi KLIK atau KEYDOWN di mana saja pada dokumen
 document.addEventListener('click', activateAudioContext);
 document.addEventListener('keydown', activateAudioContext);
+document.addEventListener('DOMContentLoaded', activateAudioContext);
 
 document.querySelectorAll('.btn').forEach(btn => {
     btn.addEventListener('mouseenter', () => {

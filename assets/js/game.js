@@ -134,10 +134,13 @@ const animeImages = {
 //pairs = pasangan
 //cols = kolom
 const difficulties = {
-    easy: { pairs: 4, cols: 4, bonus: 50 },
-    medium: { pairs: 6, cols: 4, bonus: 100 },
-    hard: { pairs: 8, cols: 4, bonus: 200 }
+    easy: { bonus: 50 },
+    medium: { bonus: 100 },
+    hard: { bonus: 200 }
 };
+
+// legacy code
+//     hard: { pairs: 8, cols: 4, bonus: 200 }
 
 // DOM Elements
 const gameGrid = document.getElementById('gameGrid');
