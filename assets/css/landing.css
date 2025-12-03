@@ -273,6 +273,8 @@ body {
     animation: fadeIn 1s ease-out 0.2s both;
 }
 
+
+/* animasi masuk tampilan bagian kanan */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -344,6 +346,7 @@ body {
     transform: rotate(25deg) translateX(80px);
 }
 
+/* sinar di belakang 3 kartu depan */
 .visual-glow {
     position: absolute;
     width: 100%;
@@ -401,6 +404,7 @@ body {
     border-color: #22d3ee;
 }
 
+/* animasi untuk menggilir susunan gambar di bawah ke kiri */
 @keyframes marquee {
     0% {
         transform: translateX(0);

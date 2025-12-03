@@ -96,6 +96,7 @@ body {
     animation: blink 2s infinite;
 }
 
+/* Animasi soft blink untuk logo online */
 @keyframes blink {
     0% { opacity: 1; }
     50% { opacity: 0.4; }
@@ -103,13 +104,17 @@ body {
 }
 
 
+
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
+        /* shift posisi */
         transform: translateY(40px);
     }
     to {
         opacity: 1;
+        /* shift posisi */
         transform: translateY(0);
     }
 }
@@ -121,8 +126,14 @@ body {
     letter-spacing: 3px;
     margin-bottom: 15px;
     background: linear-gradient(90deg, #22d3ee, #3b82f6, #8b5cf6, #22d3ee);
+
+    /* set size background ke 300% */
     background-size: 300% auto;
+
+    /* klip background ke text */
     -webkit-background-clip: text;
+
+    /* buat color text asli transparan */
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: titleShine 5s linear infinite;
@@ -130,6 +141,7 @@ body {
 }
 
 @keyframes titleShine {
+    /* gerakkan background dari 0% ke 300% agar terlihat seperti berubah warna */
     to { background-position: 300% center; }
 }
 
