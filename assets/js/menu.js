@@ -153,6 +153,9 @@ function showTutorialModal() {
 
 function showLeaderboardModal() {
     openLeaderboard();
+
+    // AMAN: Hanya jalankan jika playSound adalah fungsi
+    // Mencegah reference error
     if(typeof playSound === 'function') playSound(600, 0.1); 
 }
 
