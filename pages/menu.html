@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Utama - Anime Memory Match</title>
     
-    <!-- <link rel="stylesheet" href="../assets/css/landing.css"> -->
     <link rel="stylesheet" href="../assets/css/menu.css">
     <link rel="stylesheet" href="../assets/css/leaderboard.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- link ke font awesome untuk icons  -->
-    
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -19,49 +18,66 @@
 
     <div class="particles" id="particles"></div>
     
-<!-- Hero Section merujuk pada area yang paling menonjol, besar, 
- dan pertama kali dilihat oleh pengguna di bagian atas (atau bagian tengah/utama) 
- dari sebuah halaman web atau aplikasi. -->
+    <div class="main-layout">
+        <main class="center-content">
+            <div class="hero-section">
+                <h1 class="main-title">ANIME<br>MEMORY</h1>
+                <p class="main-subtitle">Uji Ingatan Waifu Kamu!</p>
 
-    <div class="landing-container">
-        <div class="hero-section">
-            
-            <h1 class="main-title">ANIME MEMORY MATCH</h1>
-            <p class="main-subtitle">Siap untuk menguji ingatanmu hari ini?</p>
+                
 
-            <div class="user-profile-banner">
-                <div class="user-greeting">
-                    <span class="greeting-label">Selamat Datang,</span>
-                    <h3 class="username-text" id="displayUsername">Player</h3>
-                </div>
-                <div class="status-indicator">
-                    <i class="fa-solid fa-circle"></i> Online
+                <!-- Content Grid: Buttons (Left) + Leaderboard (Right) -->
+                <div class="content-grid">
+                    
+                    <!-- Left: Menu Buttons -->
+                    <div class="menu-actions">
+                        <div class="user-profile-banner">
+                            <div class="avatar-circle">
+                                <i class="fa-solid fa-user-astronaut"></i>
+                            </div>
+                            <div class="user-info">
+                                <span class="greeting-label">Selamat Datang,</span>
+                                <h3 class="username-text" id="displayUsername">Player</h3>
+                            </div>
+                            <div class="status-indicator">
+                                <i class="fa-solid fa-circle"></i>
+                            </div>
+                        </div>
+                        <a href="game.html" class="menu-btn play-btn">
+                            <i class="fa-solid fa-play"></i> <span>MAIN</span>
+                        </a>
+                        <div class="secondary-btns">
+                            <button class="menu-btn team-btn" onclick="showTeamModal()">
+                                <i class="fa-solid fa-users"></i> <span>TIM</span>
+                            </button>
+                            <button class="menu-btn info-btn" onclick="showTutorialModal()">
+                                <i class="fa-solid fa-info"></i> <span>INFO</span>
+                            </button>
+                        </div>
+                        <button class="menu-btn exit-btn" id="logoutBtn">
+                            <i class="fa-solid fa-right-from-bracket"></i> <span>KELUAR</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Right: Leaderboard Preview -->
+                    <div class="leaderboard-panel">
+                        <div class="panel-header">
+                            <h3><i class="fa-solid fa-crown"></i> TOP 5 RANK</h3>
+                        </div>
+                        <div class="panel-list" id="leaderboardPreviewList">
+                            <p class="loading-text-sm">Memuat...</p>
+                            <!-- Items injected via JS -->
+                        </div>
+                        <button class="view-all-btn" id="viewAllLeaderboard">
+                            Lihat Semua
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="menu-buttons">
-                <a href="game.html" class="menu-btn play-btn">
-                    <i class="fa-solid fa-gamepad"></i> <span>MAIN SEKARANG</span>
-                </a>
-
-                <button class="menu-btn leaderboard-btn" id="leaderboardBtn">
-                    <i class="fa-solid fa-trophy"></i> <span>LEADERBOARD</span>
-                </button>
-
-                <button class="menu-btn info-btn" onclick="showTeamModal()">
-                    <i class="fa-solid fa-users"></i> <span>TIM KAMI</span>
-                </button>
-
-                <button class="menu-btn tutorial-btn" onclick="showTutorialModal()">
-                    <i class="fa-solid fa-book-open"></i> <span>CARA BERMAIN</span>
-                </button>
-
-                <button class="menu-btn logout-btn" id="logoutBtn">
-                    <i class="fa-solid fa-right-from-bracket"></i> <span>KELUAR</span>
-                </button>
-            </div>
-        </div>
+        </main>
     </div>
 
+    <!-- Modals -->
     <div class="modal-overlay" id="teamModal">
         <div class="modal-box">
             <button class="close-btn" title="Tutup" onclick="closeModal('teamModal')"><i class="fa-solid fa-xmark"></i></button>
@@ -115,7 +131,6 @@
         </div>
     </div>
 
-    <!-- <script src="../assets/js/landing.js"></script>  -->
     <script src="../assets/js/leaderboard.js" type="module"></script> 
     <script src="../assets/js/menu.js" type="module"></script>
 </body>

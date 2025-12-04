@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime Memory Match - Pro Edition</title>
+    <title>Anime Memory Match - Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/game.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -11,105 +15,97 @@
     <!-- Particle Background -->
     <div class="particles" id="particles"></div>
     
-    <div class="game-container">
-        <!-- Back Button -->
-    <a href="menu.html" class="back-btn">
-        <span>Kembali</span>
-    </a>
-        <!-- Header dengan Logo SVG Custom -->
-        <div class="header">
-            <div class="logo-container">
-                <!-- logo here -->
-                <h1 class="game-title">ANIME MEMORY MATCH</h1>
-                <p class="game-subtitle">My Kisah Edition</p>
+    <!-- Level Selection Modal (Shows on Load) -->
+    <div class="level-modal-overlay" id="levelModal">
+        <div class="level-modal">
+            <h1 class="level-title">PILIH TINGKAT KESULITAN</h1>
+            <div class="level-options">
+                <button class="level-btn easy" onclick="selectLevel('easy')">
+                    <i class="fa-solid fa-star"></i>
+                    <span>MUDAH</span>
+                </button>
+                <button class="level-btn medium" onclick="selectLevel('medium')">
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                    <span>NORMAL</span>
+                </button>
+                <button class="level-btn hard" onclick="selectLevel('hard')">
+                    <i class="fa-solid fa-meteor"></i>
+                    <span>SULIT</span>
+                </button>
             </div>
+            <a href="menu.html" class="level-back-link">Kembali ke Menu</a>
+        </div>
+    </div>
+
+    <div class="game-container" id="gameContainer" style="display: none;">
+        <!-- Back Button (Red Icon) -->
+        <a href="menu.html" class="back-btn-custom">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+
+        <!-- Header -->
+        <div class="header">
+            <h1 class="game-title">ANIME MEMORY</h1>
         </div>
 
         <!-- Stats Bar -->
         <div class="stats-container">
             <div class="stat-item">
-                <div class="stat-content">
-                    <span class="stat-label">Score</span>
-                    <span class="stat-value" id="score">0</span>
-                </div>
+                <span class="stat-label">SKOR</span>
+                <span class="stat-value" id="score">0</span>
             </div>
-            
             <div class="stat-item">
-
-                <div class="stat-content">
-                    <span class="stat-label">Moves</span>
-                    <span class="stat-value" id="moves">0</span>
-                </div>
+                <span class="stat-label">LANGKAH</span>
+                <span class="stat-value" id="moves">0</span>
             </div>
-            
             <div class="stat-item">
-                <div class="stat-content">
-                    <span class="stat-label">Time</span>
-                    <span class="stat-value" id="timer">00:00</span>
-                </div>
+                <span class="stat-label">WAKTU</span>
+                <span class="stat-value" id="timer">00:00</span>
             </div>
-            
             <div class="stat-item">
-                <div class="stat-content">
-                    <span class="stat-label">Combo</span>
-                    <span class="stat-value" id="combo">x0</span>
-                </div>
+                <span class="stat-label">COMBO</span>
+                <span class="stat-value" id="combo">x0</span>
             </div>
             
-            <button class="restart-btn" id="restartBtn">
-                Restart
-            </button>
-        </div>
-
-        <!-- Sound Toggle -->
-        <div class="sound-toggle">
-            <button class="sound-btn active" id="soundBtn">
-                <span id="soundLabel">Sound ON</span>
-            </button>
-        </div>
-
-        <!-- Difficulty Selector -->
-        <div class="difficulty-container">
-            <button class="difficulty-btn" data-difficulty="easy">
-                Easy
-            </button>
-            <button class="difficulty-btn active" data-difficulty="medium">
-                Medium
-            </button>
-            <button class="difficulty-btn" data-difficulty="hard">
-                Hard
-            </button>
+            <div class="controls">
+                <button class="icon-btn" id="restartBtn" title="Ulangi">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+                <button class="icon-btn" id="soundBtn" title="Suara">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Game Grid -->
         <div class="grid-container" id="gameGrid"></div>
+    </div>
 
-        <!-- Win Modal -->
-        <div class="modal-overlay hidden" id="winModal">
-            <div class="modal-content">
-                <h2 class="modal-title">VICTORY!</h2>
-                <p class="modal-message">Kamu berhasil menyelesaikan permainan!</p>
-                <div class="modal-stats">
-                    <div class="modal-stat">
-                        <div class="modal-stat-label">Final Score</div>
-                        <div class="modal-stat-value" id="finalScore">0</div>
-                    </div>
-                    <div class="modal-stat">
-                        <div class="modal-stat-label">Time</div>
-                        <div class="modal-stat-value" id="finalTime">00:00</div>
-                    </div>
-                    <div class="modal-stat">
-                        <div class="modal-stat-label">Moves</div>
-                        <div class="modal-stat-value" id="finalMoves">0</div>
-                    </div>
-                    <div class="modal-stat">
-                        <div class="modal-stat-label">Best Combo</div>
-                        <div class="modal-stat-value" id="finalCombo">x0</div>
-                    </div>
+    <!-- Win Modal -->
+    <div class="modal-overlay hidden" id="winModal">
+        <div class="modal-content">
+            <div class="trophy-icon"><i class="fa-solid fa-trophy"></i></div>
+            <h2 class="modal-title">MENANG!</h2>
+            <p class="modal-message">Waifu kamu bangga padamu!</p>
+            
+            <div class="modal-stats">
+                <div class="m-stat">
+                    <span>Skor Akhir</span>
+                    <strong id="finalScore">0</strong>
                 </div>
-                <button class="play-again-btn" id="playAgainBtn">
-                    Main Lagi
-                </button>
+                <div class="m-stat">
+                    <span>Waktu</span>
+                    <strong id="finalTime">00:00</strong>
+                </div>
+                <div class="m-stat">
+                    <span>Langkah</span>
+                    <strong id="finalMoves">0</strong>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="action-btn primary" id="playAgainBtn">Main Lagi</button>
+                <a href="menu.html" class="action-btn secondary">Menu Utama</a>
             </div>
         </div>
     </div>

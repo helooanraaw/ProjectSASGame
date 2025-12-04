@@ -1,9 +1,7 @@
-// game.js (Baris Paling Atas)
-import { _supabase, checkSession } from './config.js'; // <--- BARIS INI HILANG DARI KODE ANDA YANG BARU
+// game.js
+import { _supabase, checkSession } from './config.js';
+
 // Game State
-
-
-
 let gameState = {
     cards: [],
     flippedCards: [],
@@ -13,95 +11,46 @@ let gameState = {
     score: 0,
     combo: 0,
     gameStarted: false,
-    difficulty: 'medium',
+    difficulty: 'medium', // Default
     timerInterval: null,
     soundEnabled: true
 };
 
-// Sound Effects - Simple beep tones menggunakan Web Audio API
+// Sound Effects
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
 const sounds = {
-    //Parameter yang dimasukkan adalah
-    //(frekuensi tone, berapa lama tone tersebut dimainkan)
     flip: () => playTone(400, 0.1),
     match: () => playTone(800, 0.2),
     wrong: () => playTone(200, 0.3),
-
-
-    //(frekuensi SETIAP tone, berapa lama SETIAP tone tersebut dimainkan)
     win: () => playMelody([523, 659, 784, 1047], 0.15),
-
     click: () => playTone(600, 0.05)
 };
 
-
 function playTone(frequency, duration) {
-    //Kalau soundEnabled mati, batal
     if (!gameState.soundEnabled) return;
-    
-    // Membuat OscillatorNode. Ini adalah sumber suara (generator gelombang). 
-    // Objek inilah yang secara matematis menghasilkan gelombang suara.
     const oscillator = audioContext.createOscillator();
-
-    //Membuat GainNode. Ini bertindak sebagai pengatur volume (atau gain) 
-    // dalam jalur audio.
     const gainNode = audioContext.createGain();
-    
-
-    //Menghubungkan keluaran suara dari oscillator (sumber suara) ke 
-    //masukan dari gainNode (pengatur volume).
     oscillator.connect(gainNode);
-
-    //Menghubungkan keluaran suara dari gainNode ke tujuan akhir suara
-    //yaitu speaker / headphone komputer 
     gainNode.connect(audioContext.destination);
-    
-
-    //Mengatur nilai frekuensi (pitch) dari osilator sesuai 
-    // dengan nilai parameter frequency yang diberikan.
     oscillator.frequency.value = frequency;
-
-    //set tipe gelombang ke gelombang sinus
-    //Gelombang sinus menghasilkan nada murni atau beep yang lembut.
     oscillator.type = 'sine';
-    
-
-    //Mengatur volume awal suara menjadi 0.3 (dari maksimal 1.0) tepat pada waktu saat ini
     gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-
-    //Ini memerintahkan volume untuk menurun secara eksponensial (halus) 
-    // dari nilai saat ini (0.3) ke 0.01 dalam waktu selama duration. (fade out)
     gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
-    
-
-    //Memerintahkan osilator untuk mulai menghasilkan suara segera pada waktu saat ini.
     oscillator.start(audioContext.currentTime);
-
-    //Memerintahkan osilator untuk menghentikan suara setelah waktu duration berlalu
     oscillator.stop(audioContext.currentTime + duration);
 }
 
-//berfungsi untuk memainkan serangkaian tone
 function playMelody(frequencies, noteDuration) {
-    ////Kalau soundEnabled mati, batal
     if (!gameState.soundEnabled) return;
-    
-    //untuk setiap elemen(tone) di dalam array frequencies
     frequencies.forEach((freq, index) => {
-        //setTimeout, yaitu menunda eksekusi kode yang berada di dalamnya
-        //selama waktu yang di set
         setTimeout(() => {
             playTone(freq, noteDuration);
         }, index * (noteDuration * 1000));
-        //index * (noteDuration * 1000)) mengatur lama waktu tunda sebelum nada dimainkan (milisecond)
-        //noteDuration * 1000: Mengubah durasi nada dari detik menjadi milidetik.
-        //"index *" memastikan tone dimainkan secara bergantian
     });
 }
 
-// Anime Images
-// Path gambar" kartu di setiap difficulty
+// Anime Images (Using existing assets)
 const animeImages = {
     easy: [
         '../images/game/image1.png',
@@ -129,18 +78,12 @@ const animeImages = {
     ]
 };
 
-
 // Difficulty Settings
-//pairs = pasangan
-//cols = kolom
 const difficulties = {
     easy: { bonus: 50 },
     medium: { bonus: 100 },
     hard: { bonus: 200 }
 };
-
-// legacy code
-//     hard: { pairs: 8, cols: 4, bonus: 200 }
 
 // DOM Elements
 const gameGrid = document.getElementById('gameGrid');
@@ -151,49 +94,58 @@ const comboEl = document.getElementById('combo');
 const restartBtn = document.getElementById('restartBtn');
 const winModal = document.getElementById('winModal');
 const playAgainBtn = document.getElementById('playAgainBtn');
-const difficultyBtns = document.querySelectorAll('.difficulty-btn');
 const soundBtn = document.getElementById('soundBtn');
-const soundLabel = document.getElementById('soundLabel');
 const particles = document.getElementById('particles');
 
-// Initialize Particles
+// Level Modal Elements
+const levelModal = document.getElementById('levelModal');
+const gameContainer = document.getElementById('gameContainer');
+
+// Initialize Particles (Sakura)
 function createParticles() {
-    for (let i = 0; i < 20; i++) {
-        //buat element div di dom
+    if (!particles) return;
+    particles.innerHTML = ''; // Clear existing
+
+    const particleCount = 30; // Number of sakura petals
+
+    for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
-        //beri kelas particle
-        particle.className = 'particle';
-        //set posisi X random
+        particle.className = 'sakura';
+        
+        // Random Position
         particle.style.left = Math.random() * 100 + '%';
-        //set delay animasi random
-        particle.style.animationDelay = Math.random() * 15 + 's';
-        //set durasi animasi random (diatas 10 detik)
-        particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-        //masukkan particle ke dalam div particles
+        
+        // Random Size
+        const size = Math.random() * 10 + 10 + 'px'; 
+        particle.style.width = size;
+        particle.style.height = size;
+        
+        // Random Animation Duration & Delay
+        particle.style.animationDuration = (Math.random() * 5 + 5) + 's, ' + (Math.random() * 2 + 2) + 's'; 
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        
         particles.appendChild(particle);
     }
 }
 
+// Level Selection Logic
+window.selectLevel = function(level) {
+    sounds.click();
+    gameState.difficulty = level;
+    
+    // Hide Modal, Show Game
+    levelModal.classList.add('hidden');
+    gameContainer.style.display = 'block';
+    
+    initGame();
+};
+
 // Initialize Game
-// Deklarasi semua variabel yang akan kita pakai
 function initGame() {
     stopTimer();
-    sounds.click();
     
-    //Selected Images
-    //Variabel sementara untuk menampung semua gambar yang terpilih
-    //"gambar yang dipilih" diambil dari animeImages sesuai difficulty game
-    //lalu kita akan punya array berisi semua gambar yang akan kita pakai
+    // Reset State
     const selectedImages = animeImages[gameState.difficulty];
-
-    //dengan gamecards, kita tampung array baru berisi 2 array selected image
-    //(karena setiap gambar punya 1 match). lalu isi array tersebut di shuffle
-    //menggunakan sort (sort digunakan untuk mengurutkan namun dengan menggunakan
-    //Math.random() - 0.5 berubah menjadi shuffle random)
-
-    //setelah di shuffle, menggunakan .map, setiap elemen di dalam array diubah
-    //menjadi objek. yang berarti hasil akhirnya adalah array gameCards
-    //berisi objek" kartu
     const gameCards = [...selectedImages, ...selectedImages]
         .sort(() => Math.random() - 0.5)
         .map((image, index) => ({
@@ -203,71 +155,53 @@ function initGame() {
             isMatched: false
         }));
     
-    gameState = {
-        cards: gameCards,
-        flippedCards: [],
-        matchedCards: [],
-        moves: 0,
-        timer: 0,
-        score: 0,
-        combo: 0,
-        gameStarted: false,
-        difficulty: gameState.difficulty,
-        timerInterval: null,
-        soundEnabled: gameState.soundEnabled
-    };
+    gameState.cards = gameCards;
+    gameState.flippedCards = [];
+    gameState.matchedCards = [];
+    gameState.moves = 0;
+    gameState.timer = 0;
+    gameState.score = 0;
+    gameState.combo = 0;
+    gameState.gameStarted = false; // Timer won't start until first click
     
     updateUI();
     renderBoard();
 
-    //hide window yang akan muncul saat menang
     winModal.classList.add('hidden');
 }
 
 // Render Game Board
 function renderBoard() {
-    //clear isi dari div gameGrid
     gameGrid.innerHTML = '';
     gameGrid.className = `grid-container ${gameState.difficulty}`;
     
-
-    //forEach = pada setiap kartu lakukan ..
     gameState.cards.forEach(card => {
         const cardEl = document.createElement('div');
         cardEl.className = 'card';
-        
         cardEl.dataset.id = card.id;
         
         cardEl.innerHTML = `
-            <div class="card-face card-back">?</div>
+            <div class="card-face card-back"></div>
             <div class="card-face card-front">
                 <img src="${card.image}" alt="Anime Card" class="card-image">
             </div>
         `;
         
-        //tambahkan eventHandler ke kartu
         cardEl.addEventListener('click', () => handleCardClick(card));
-        //masukkan kartu ke dalam div gameGrid
         gameGrid.appendChild(cardEl);
     });
 }
 
 // Handle Card Click
-// function ketika sebuah card di click
-// note : El = elemen
 function handleCardClick(card) {
-
-    //jika game belum dimulai maka mulai game dan mulai timer
+    // Start timer on FIRST click
     if (!gameState.gameStarted) {
         startTimer();
         gameState.gameStarted = true;
     }
     
-    //pilih elemen html yang merepresentasikan kartu yang di klik
     const cardEl = document.querySelector(`[data-id="${card.id}"]`);
     
-    //Hentikan function jika memang sudah ada 2 kartu yang di flip ATAU
-    //di flippedCards sudah ada kartu ini ATAU kartu ini sudah matched
     if (
         gameState.flippedCards.length === 2 ||
         gameState.flippedCards.includes(card.id) ||
@@ -277,13 +211,9 @@ function handleCardClick(card) {
     }
     
     sounds.flip();
-    //Mainkan animasi flip pada kartu
     cardEl.classList.add('flipped');
     gameState.flippedCards.push(card.id);
 
-
-    //jika setelah kartu ini di tambahkan ke flippedCard dan 
-    //flippedCard jadinya isi 2 maka increment moves dan cek apakah matching
     if (gameState.flippedCards.length === 2) {
         gameState.moves++;
         movesEl.textContent = gameState.moves;
@@ -291,55 +221,36 @@ function handleCardClick(card) {
     }
 }
 
-
-
 // Check if cards match
 function checkMatch() {
-    //dengan array destructuring, dapatkan kartu 1 dan 2 di flippedCard
     const [firstId, secondId] = gameState.flippedCards;
-    //dapatkan data kartu pertama dan kedua itu
     const firstCard = gameState.cards.find(c => c.id === firstId);
     const secondCard = gameState.cards.find(c => c.id === secondId);
     
-    //Jika matching
     if (firstCard.image === secondCard.image) {
         sounds.match();
-
-        //masukkan kedua kertu yang sudah matching itu ke matchedCards
         gameState.matchedCards.push(firstId, secondId);
-
-        //tambahkan combo
         gameState.combo++;
-
-        //tambahkan poin
         gameState.score += 100 * gameState.combo;
         
         comboEl.textContent = `x${gameState.combo}`;
         scoreEl.textContent = gameState.score;
         
-        //cari elemen di file htmlnya yang merepresentasikan kedua kartu tersebut
         const firstCardEl = document.querySelector(`[data-id="${firstId}"]`);
         const secondCardEl = document.querySelector(`[data-id="${secondId}"]`);
         
-        //kedua kartu tersebut memainkan animasi matched
         firstCardEl.classList.add('matched');
         secondCardEl.classList.add('matched');
         
-        
-        //kosongkan kembali flippedCard
         gameState.flippedCards = [];
         
-        //jiks semua kartu telah matching, akhiri game
         if (gameState.matchedCards.length === gameState.cards.length) {
             setTimeout(() => {
                 endGame();
             }, 500);
         }
-    //jika gak matching
     } else {
         sounds.wrong();
-
-        //reset combo
         gameState.combo = 0;
         comboEl.textContent = 'x0';
         
@@ -353,27 +264,9 @@ function checkMatch() {
             }
             
             gameState.flippedCards = [];
-
-            // // TANTANGAN BARU: Reset semua kartu yang sudah matched
-            // // Hapus class 'flipped' dan 'matched' dari semua kartu yang telah matched
-            // gameState.matchedCards.forEach(cardId => {
-            //     const cardEl = document.querySelector(`[data-id="${cardId}"]`);
-            //     if (cardEl) {
-            //         cardEl.classList.remove('matched'); // Hilangkan status matched
-            //         cardEl.classList.remove('flipped'); // Tutup kembali
-            //         gameState.score = 0;
-            //         updateUI();
-            //     }
-            // });
-
-            // // 3. Kosongkan array matchedCards dan flippedCards
-            // gameState.matchedCards = [];
-            // gameState.flippedCards = [];
-
         }, 800);
     }
 }
-
 
 // Timer Functions
 function startTimer() {
@@ -405,7 +298,6 @@ function updateUI() {
 }
 
 // End Game
-// selesaikan game
 async function endGame() {
     stopTimer();
     sounds.win();
@@ -416,54 +308,27 @@ async function endGame() {
     const finalScore = gameState.score + timeBonus + moveBonus + difficultyBonus;
     
     gameState.score = finalScore;
-    console.log('Final Score yang didapat:', finalScore);
     
-    // Update Tampilan Modal
     document.getElementById('finalScore').textContent = finalScore;
     document.getElementById('finalTime').textContent = timerEl.textContent;
     document.getElementById('finalMoves').textContent = gameState.moves;
-    document.getElementById('finalCombo').textContent = `x${gameState.combo}`;
     
     winModal.classList.remove('hidden');
 
-    // --- LOGIC SIMPAN KE SUPABASE ---
-    //Ambil user data dari localstorage
+    // Save to Supabase
     const user = checkSession();
-
     if (user) {
-        // 1. Ambil Skor Lama (Hanya untuk membandingkan)
-        
-        // Perubahan: Menggunakan variabel 'fetchResult' dan mengakses properti .data dan .error
         const fetchResult = await _supabase
             .from('leaderboard')
             .select('score')
             .eq('user_id', user.id)
-            .maybeSingle(); // Gunakan maybeSingle agar tidak error jika tidak ada data
-        //SELECT score FROM leaderboard WHERE user_id = user.id (hanya 1)
+            .maybeSingle();
 
         const existingEntry = fetchResult.data;
-        const fetchError = fetchResult.error;
-
-        // Penanganan error tetap sama
-        if (fetchError) {
-            console.error("Gagal mengambil skor lama:", fetchError);
-            // Lanjutkan eksekusi meskipun gagal fetch, asumsikan skor lama = 0
-        }
-
-        // if(existingEntry){
-        //     currentHighScore = existingEntry.score
-        // }else{
-        //     currentHighScore = 0
-        // }
-
         const currentHighScore = existingEntry ? existingEntry.score : 0;
 
-        // 2. Bandingkan dan Lakukan UPSERT
         if (finalScore > currentHighScore) {
-            console.log("Melakukan UPSERT karena skor baru lebih tinggi!");
-            
-            // Perubahan: Menggunakan variabel 'upsertResult' dan mengakses properti .error
-            const upsertResult = await _supabase
+            await _supabase
                 .from('leaderboard')
                 .upsert(
                     {
@@ -473,176 +338,42 @@ async function endGame() {
                         time: gameState.timer,
                         moves: gameState.moves,
                     }, 
-                    { 
-                        onConflict: 'user_id' 
-                    }
+                    { onConflict: 'user_id' }
                 );
-            //Dalam analogi SQL===================================
-            // INSERT INTO leaderboard (user_id, username, score, time, moves)
-            // VALUES (
-            //     'user.id', 
-            //     'user.username', 
-            //     finalScore, 
-            //     gameState.timer, 
-            //     gameState.moves
-            // )
-            // ON CONFLICT (user_id)  -- This targets the column specified by { onConflict: 'user_id' }
-            // DO UPDATE SET
-            //     username = EXCLUDED.username, -- EXCLUDED refers to the value provided in the INSERT part
-            //     score    = EXCLUDED.score,
-            //     time     = EXCLUDED.time,
-            //     moves    = EXCLUDED.moves;
-
-            //Note : Basically insert user.id, user.username, finalscore, timer dan moves
-            //ke leaderboard. namun kalau ternyata di dalam leaderboard sudah ada
-            //user id yang sama maka update saja username, score, time dan moves
-            //di yang sudah ada tanpa memasukkan data baru
-                
-            const upsertError = upsertResult.error;
-
-            if (upsertError) {
-                console.error("Gagal save high score:", upsertError);
-            } else {
-                console.log("New High Score saved!");
-            }
-        } else {
-            console.log("TIDAK melakukan UPSERT karena skor baru TIDAK lebih tinggi.");
-            console.log(`Skor baru (${finalScore}) tidak lebih tinggi dari High Score lama (${currentHighScore}). Tidak disimpan.`);
         }
     }
 }
 
 // Sound toggle
 soundBtn.addEventListener('click', () => {
-    // Jika nyala -> Matikan
-    // Jika mati -> Nyalakan
     gameState.soundEnabled = !gameState.soundEnabled;
     sounds.click();
-    
-    const soundOn = document.querySelector('.sound-on');
-    const soundOff = document.querySelector('.sound-off');
-    
     if (gameState.soundEnabled) {
-        soundBtn.classList.add('active');
-        soundOn.style.display = 'block';
-        soundOff.style.display = 'none';
-        soundLabel.textContent = 'Sound ON';
+        soundBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
     } else {
-        soundBtn.classList.remove('active');
-        soundOn.style.display = 'none';
-        soundOff.style.display = 'block';
-        soundLabel.textContent = 'Sound OFF';
+        soundBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
     }
 });
 
-// Event Listeners untuk restart game
-restartBtn.addEventListener('click', initGame);
-playAgainBtn.addEventListener('click', initGame);
-
-// Tombol set difficulty
-// Untuk setiap tombol difficulty berikan event listener click
-difficultyBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Mainkan suara click
-        sounds.click();
-        // Hilangkan class active dari semua tombol difficulty
-        difficultyBtns.forEach(b => b.classList.remove('active'));
-        // tambahkan class active di tombol difficulty yang ditekan
-        btn.classList.add('active');
-        //set difficulty 
-        gameState.difficulty = btn.dataset.difficulty;
-        //restart game
-        initGame();
-    });
+// Restart Game
+restartBtn.addEventListener('click', () => {
+    sounds.click();
+    // Show level modal again on restart
+    gameContainer.style.display = 'none';
+    levelModal.classList.remove('hidden');
 });
 
-// createParticles();
-// initGame();
+playAgainBtn.addEventListener('click', () => {
+    sounds.click();
+    winModal.classList.add('hidden');
+    gameContainer.style.display = 'none';
+    levelModal.classList.remove('hidden');
+});
 
-// Back button sound
-const backBtn = document.querySelector('.back-btn');
-if (backBtn) {
-    backBtn.addEventListener('click', () => {
-        sounds.click();
-    });
-}
-
-// Gunakan DOMContentLoaded untuk memastikan semua elemen HTML (gameGrid, dll) sudah ada.
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     createParticles();
-    initGame();
+    // Ensure modal is visible and game is hidden initially
+    levelModal.classList.remove('hidden');
+    gameContainer.style.display = 'none';
 });
-
-
-//Kode cadangan
-
-//================KODE UNTUK PREVIEW DULU DI AWAL======================
-// // Handle Card Click
-// // function ketika sebuah card di click
-// function handleCardClick(card) {
-//     // HANDLE CLICK UNTUK KALAU MAU PREVIEW DI AWAL
-
-//     // ⭐️ PERUBAHAN KRUSIAL DI SINI:
-//     // Jika game belum dimulai, JANGAN flip kartu, tapi PANGGIL PREVIEW.
-//     if (!gameState.gameStarted) {
-//         // Panggil fungsi preview
-//         startPreview(); 
-//         // Hentikan function agar kartu yang baru diklik TIDAK ter-flip
-//         return; 
-//     }
-    
-//     //pilih elemen html yang merepresentasikan kartu yang di klik
-//     const cardEl = document.querySelector(`[data-id="${card.id}"]`);
-    
-//     if (
-//         gameState.flippedCards.length === 2 ||
-//         gameState.flippedCards.includes(card.id) ||
-//         gameState.matchedCards.includes(card.id)
-//     ) {
-//         return;
-//     }
-    
-//     sounds.flip();
-//     //Mainkan animasi flip pada kartu
-//     cardEl.classList.add('flipped');
-//     gameState.flippedCards.push(card.id);
-
-
-//     //jika setelah kartu ini di tambahkan ke flippedCard dan 
-//     //flippedCard jadinya isi 2 maka increment moves dan cek apakah matching
-//     if (gameState.flippedCards.length === 2) {
-//         gameState.moves++;
-//         movesEl.textContent = gameState.moves;
-//         checkMatch();
-//     }
-// }
-
-
-// // --- Fungsi Baru untuk Preview Kartu ---
-// function startPreview() {
-//     // 1. Tampilkan semua kartu (dengan menambahkan class 'flipped' ke SEMUA kartu)
-//     const allCards = document.querySelectorAll('.card');
-//     allCards.forEach(cardEl => {
-//         cardEl.classList.add('flipped');
-//     });
-
-//     // 2. Nonaktifkan klik selama preview
-//     gameGrid.style.pointerEvents = 'none';
-
-//     // 3. Atur timer untuk menutup kartu kembali
-//     setTimeout(() => {
-//         // Tutup kembali semua kartu (hapus class 'flipped')
-//         allCards.forEach(cardEl => {
-//             // JANGAN menghapus class 'matched' jika sudah ada,
-//             // tapi karena ini di awal game, semua kartu belum matched.
-//             cardEl.classList.remove('flipped'); 
-//         });
-
-//         // 4. Aktifkan klik, mulai timer, dan set gameStarted menjadi true
-//         gameGrid.style.pointerEvents = 'auto';
-//         startTimer();
-//         gameState.gameStarted = true;
-        
-//     }, 1000); // Tunda 2 detik (2000ms) untuk preview
-// }
-//=================================================================================
