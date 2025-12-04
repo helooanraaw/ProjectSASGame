@@ -111,7 +111,6 @@ body::before {
     gap: 15px;
     margin-bottom: 20px; /* Space before buttons */
     width: fit-content; /* Prevent stretching */
-    align-self: flex-start; /* Align to left */
     transition: transform 0.3s ease;
 }
 
@@ -145,11 +144,15 @@ body::before {
 
 /* Menu Actions */
 .menu-actions {
-    display: flex; flex-direction: column; gap: 15px; justify-content: flex-end; /* Align to bottom */
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+    justify-content: flex-end; /* Align to bottom */
+    align-items: center;
 }
 
 .secondary-btns {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%;;
 }
 
 .menu-btn {
@@ -165,16 +168,25 @@ body::before {
 .menu-btn:active { transform: translateY(5px); box-shadow: none; }
 
 /* Button Colors (Sakura Palette) */
-.play-btn { background: #ff69b4; font-size: 1.5rem; padding: 25px; } /* Hot Pink */
+.play-btn { 
+    background: #ff69b4; 
+    font-size: 1.5rem; 
+    padding: 25px;
+    width: 100%;
+ } /* Hot Pink */
 .play-btn:hover { background: #ff1493; box-shadow: 0 0 20px rgba(255, 105, 180, 0.6); }
 
-.team-btn { background: #ffb7b2; color: #881c1c; } /* Soft Pink */
+.team-btn { background: #ffb7b2; color: #881c1c;  width: 100%;} /* Soft Pink */
 .team-btn:hover { background: #ffdac1; }
 
-.info-btn { background: #e2f0cb; color: #3b6006; } /* Soft Green */
+.info-btn { background: #e2f0cb; color: #3b6006; width: 100%;} /* Soft Green */
 .info-btn:hover { background: #f0f9e0; }
 
-.exit-btn { background: #ff9aa2; color: #8b0000; } /* Salmon Red */
+.exit-btn { 
+    background: #ff9aa2; 
+    color: #8b0000; 
+    width: 100%;
+} /* Salmon Red */
 .exit-btn:hover { background: #ffb7b2; }
 
 /* Leaderboard Panel */

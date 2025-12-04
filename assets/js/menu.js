@@ -1,5 +1,6 @@
 // menu.js
 import { _supabase, checkSession } from './config.js';
+import { openLeaderboard } from './leaderboard.js'; // <--- TAMBAHKAN INI
 
 // Cek sesi user saat halaman dimuat
 document.addEventListener('DOMContentLoaded', async () => {
@@ -105,12 +106,12 @@ if (viewAllBtn) {
     viewAllBtn.addEventListener('click', openLeaderboard);
 }
 
-function openLeaderboard() {
-    leaderboardModal.classList.add('active');
-    if (window.refreshLeaderboard) {
-        window.refreshLeaderboard();
-    }
-}
+// function openLeaderboard() {
+//     leaderboardModal.classList.add('active');
+//     if (window.refreshLeaderboard) {
+//         window.refreshLeaderboard();
+//     }
+// }
 
 // Logout Logic
 const logoutBtn = document.getElementById('logoutBtn');
