@@ -107,11 +107,12 @@ body::before {
 .back-btn-custom {
     position: absolute; top: -60px; left: 0;
     width: 50px; height: 50px;
-    background: #ff69b4;
+    /* background: #ff69b4; */
+    background-color: #ff6969;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     color: white; text-decoration: none; font-size: 1.2rem;
-    box-shadow: 0 5px 0 #c71585;
+    box-shadow: 0 5px 0 #c71515;
     transition: transform 0.1s;
 }
 .back-btn-custom:active { transform: translateY(5px); box-shadow: none; }
@@ -207,11 +208,52 @@ body::before {
 
 .card-image { width: 100%; height: 100%; object-fit: cover; }
 
-.card.matched .card-front {
+/* .card.matched .card-front {
     border-color: #ff69b4;
     box-shadow: 0 0 0 4px #ff69b4;
+} */
+
+.card.matched .card-front {
+    /* Menghapus border agar centang terlihat lebih jelas */
+    border: none;
+    /* Memberikan latar belakang hijau transparan yang berkedip */
+    background: rgba(74, 222, 128, 0.2); /* var(--light-green) with opacity */
+    /* *** MODIFIKASI: Gunakan ease-out selama 1s dan fill-mode forwards *** */
+    animation: match-glow 1s ease-out forwards; 
 }
 
+.card.matched .card-front::after {
+    /* Menggunakan Font Awesome Check Mark */
+    content: '\f00c'; 
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4em;
+    color: #4ade80; 
+    opacity: 1;
+    z-index: 5;
+    /* *** MODIFIKASI: Gunakan ease-out selama 1s dan fill-mode forwards *** */
+    animation: check-fade 1s ease-out forwards;
+}
+
+@keyframes match-glow {
+    0% { box-shadow: 0 0 10px #4ade80; background: rgba(74, 222, 128, 0.2); }
+    50% { box-shadow: 0 0 40px #4ade80; background: rgba(74, 222, 128, 0.4); }
+    75% { background: rgba(74, 222, 128, 0.1); }
+    /* *** MODIFIKASI: Hilangkan bayangan dan atur background kembali ke normal *** */
+    100% { box-shadow: none; background: #fff; border: 3px solid white; } 
+}
+
+@keyframes check-fade {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    30% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+    70% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+    /* *** MODIFIKASI: Centang menghilang di akhir animasi *** */
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+}
 /* Win Modal */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;

@@ -306,3 +306,124 @@ body::before {
 }
 
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* 💻 Responsive Desktop to Tablet (Perbaikan Tata Letak Vertikal) */
+@media (max-width: 900px) {
+    /* PENTING: Izinkan scrolling vertikal di mobile/tablet */
+    body {
+        overflow-y: auto; 
+    }
+    
+    .main-layout {
+        /* Hapus height: 100vh agar konten bisa di-scroll */
+        height: auto; 
+        min-height: 100vh;
+        align-items: flex-start; /* Mulai konten dari atas */
+        padding-top: 50px; /* Tambah padding atas agar tidak menempel */
+    }
+    
+    /* Center Content perlu ruang tambahan di bawah */
+    .center-content {
+        padding-bottom: 50px;
+    }
+
+    .content-grid { 
+        grid-template-columns: 1fr; /* Stack buttons and leaderboard */
+    }
+    .leaderboard-panel { 
+        height: auto; 
+        min-height: 300px;
+        margin-top: 30px; /* Tambahkan jarak besar dari tombol */
+    }
+    
+    .menu-actions {
+        /* PENTING: Gunakan order: 1 agar tombol berada DI ATAS leaderboard (default order: 2) */
+        order: 1; 
+         /* Atur agar menu-actions menggunakan seluruh lebar di kolom tunggal */
+         width: 100%;
+         /* Tombol disamakan perataannya ke kiri (atau center, tapi center lebih baik karena ada banner) */
+         align-items: center;
+    }
+    
+    .leaderboard-panel {
+        /* PENTING: Gunakan order: 2 agar leaderboard berada DI BAWAH tombol (default order: 2) */
+        order: 2; 
+    }
+}
+
+/* 📱 Responsive Mobile Phone (Penyesuaian Visual) */
+@media (max-width: 600px) {
+    /* 1. Perbaiki Judul Utama (ANIME MEMORY) */
+    .main-title {
+        font-size: 3.5rem; /* Kurangi ukuran font */
+        line-height: 1; /* Longgarkan baris */
+        margin-bottom: 5px;
+    }
+    .main-subtitle {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    /* 2. Tata Letak Konten */
+    .center-content {
+        padding: 10px;
+    }
+    
+    /* 3. Tombol */
+    .menu-btn {
+        font-size: 1rem;
+        padding: 15px;
+    }
+    .play-btn {
+        font-size: 1.2rem;
+        padding: 20px;
+    }
+    
+    /* 4. Secondary buttons stack on top of each other on very small screens */
+    .secondary-btns {
+        grid-template-columns: 1fr; /* Tombol Info & Team bertumpuk */
+        gap: 10px;
+    }
+    
+    /* 5. Leaderboard Preview */
+    .leaderboard-panel {
+        padding: 15px;
+        min-height: 250px;
+    }
+    .panel-header h3 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    /* 6. Item Leaderboard */
+    .preview-item {
+        padding: 10px;
+        gap: 10px;
+    }
+    .rank-num { 
+        width: 20px; 
+        font-size: 1rem; 
+    }
+    .p-name, .p-score {
+        font-size: 0.9rem; 
+    }
+    
+    .view-all-btn {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+    
+    /* 7. Modals */
+    .modal-box {
+        padding: 30px 20px;
+    }
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .team-member {
+        padding: 10px;
+    }
+    
+}
+
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
