@@ -322,7 +322,7 @@ body::before {
 @media (max-width: 900px) {
     /* PENTING: Izinkan scrolling vertikal di mobile/tablet */
     body {
-        overflow-y: auto !important;
+        overflow-y: hidden !important;
     }
     
     /* MODIFIKASI: main-layout tidak boleh 100vh di mobile */
