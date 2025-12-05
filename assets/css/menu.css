@@ -6,6 +6,13 @@
     box-sizing: border-box;
 }
 
+html, body {
+      /* PENTING: Mencegah elemen apa pun menciptakan scroll horizontal */
+      overflow-x: hidden;
+      /* Memastikan lebar mengikuti viewport secara ketat */
+      width: 100%;
+}
+
 body {
     font-family: 'Fredoka', sans-serif;
     background-image: url('/images/other/image.png'); /* Restored Background */
@@ -18,6 +25,10 @@ body {
     color: #fff;
     overflow: hidden;
     position: relative;
+    /* MODIFIKASI: Izinkan scroll vertikal secara default */
+      overflow-y: auto; 
+      overflow-x: hidden; /* Blokir horizontal */
+      position: relative;
 }
 
 body::before {
@@ -30,6 +41,8 @@ body::before {
     background: rgba(26, 26, 46, 0.7); /* Dark overlay for readability */
     z-index: -1;
 }
+
+
 
 /* Sakura Particles */
 .sakura {
@@ -301,7 +314,35 @@ body::before {
 
 @media (max-width: 900px) {
     .content-grid { grid-template-columns: 1fr; }
-    .leaderboard-panel { height: auto; min-height: 300px; display: none; }
+    .leaderboard-panel { height: auto; min-height: 300px; }
+}
+
+/* Responsive */
+/* Menambahkan main-layout dan body properties untuk scrolling di mobile */
+@media (max-width: 900px) {
+    /* PENTING: Izinkan scrolling vertikal di mobile/tablet */
+    body {
+        overflow-y: auto !important;
+    }
+    
+    /* MODIFIKASI: main-layout tidak boleh 100vh di mobile */
+    .main-layout {
+        height: auto; /* Memungkinkan konten memanjang dan di-scroll */
+        min-height: 100vh; /* Memastikan layout minimal setinggi layar */
+        align-items: flex-start; /* Mulai konten dari atas */
+        padding-top: 40px; /* Tambahkan ruang di atas */
+        padding-bottom: 40px; /* Tambahkan ruang di bawah */
+    }
+
+      .content-grid { 
+        grid-template-columns: 1fr; 
+    }
+    
+      .leaderboard-panel { 
+        height: auto; 
+        min-height: 300px; 
+        display: none; 
+    }
 }
 
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
