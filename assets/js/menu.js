@@ -100,10 +100,15 @@ window.closeModal = function(modalId) {
 
 // Leaderboard Modal Logic
 const viewAllBtn = document.getElementById('viewAllLeaderboard');
+const viewAllBtnMobile = document.getElementById('viewAllLeaderboardmobile');
 const leaderboardModal = document.getElementById('leaderboardModal');
 
 if (viewAllBtn) {
     viewAllBtn.addEventListener('click', openLeaderboard);
+}
+
+if (viewAllBtnMobile) {
+    viewAllBtnMobile.addEventListener('click', openLeaderboard);
 }
 
 // function openLeaderboard() {
