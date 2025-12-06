@@ -6,6 +6,14 @@
     box-sizing: border-box;
 }
 
+
+html, body{
+    /* PENTING: Mencegah elemen apa pun menciptakan scroll horizontal */
+    overflow-x: hidden;
+    /* Memastikan lebar mengikuti viewport secara ketat */
+    width: 100%;
+}
+
 body {
     font-family: 'Fredoka', sans-serif;
     background-image: url('/images/other/image.png'); /* Restored Background */
@@ -308,6 +316,9 @@ body::before {
 
 /* --- RESPONSIVE MODIFICATIONS (Mobile & Tablet) --- */
 @media (max-width: 768px) {
+    body {
+        overflow-y: hidden !important;
+    }
     
     /* PENYESUAIAN HEADER DAN LAYOUT UTAMA */
     
