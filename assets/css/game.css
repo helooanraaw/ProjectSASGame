@@ -305,3 +305,106 @@ body::before {
 
 .primary { background: #ff69b4; color: white; }
 .secondary { background: transparent; border: 2px solid #ffb7b2; color: #ffb7b2; }
+
+/* --- RESPONSIVE MODIFICATIONS (Mobile & Tablet) --- */
+@media (max-width: 768px) {
+    
+    /* PENYESUAIAN HEADER DAN LAYOUT UTAMA */
+    
+    .game-container {
+        /* Memastikan konten mengisi lebar mobile */
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .game-title {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+    
+    /* STATS BAR - Mengubah tata letak agar lebih ringkas */
+    .stats-container {
+        padding: 10px 15px;
+        /* Gunakan flex-wrap agar kontrol pindah baris jika terlalu sempit */
+        flex-wrap: wrap; 
+        justify-content: space-around; /* Distribusi item secara merata */
+        gap: 10px; /* Jarak antar item */
+    }
+
+    .stat-item {
+        /* Beri lebar agar 3 item stat (Skor, Langkah, Waktu) muat di satu baris */
+        width: 30%; 
+        min-width: 60px;
+    }
+
+    .stat-label {
+        font-size: 0.65rem;
+    }
+    .stat-value {
+        font-size: 1.2rem;
+    }
+    
+    /* KONTROL (Restart & Sound) - Penyesuaian Tombol Ikon */
+    .controls {
+        /* Memastikan kontrol berada di baris sendiri jika wrap terjadi */
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+        order: 10; /* Pastikan controls berada di bawah */
+    }
+
+    .icon-btn {
+        /* MENGECILKAN UKURAN TOMBOL */
+        width: 40px; 
+        height: 40px; 
+        font-size: 1rem;
+        box-shadow: 0 3px 0 #e6a8a3;
+    }
+    .icon-btn:active {
+        transform: translateY(3px);
+    }
+    
+    /* BACK BUTTON - Sesuaikan posisi agar tidak terlalu jauh */
+    .back-btn-custom {
+        top: 10px;
+        left: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+        box-shadow: 0 3px 0 #c71515;
+    }
+    .back-btn-custom:active {
+        transform: translateY(3px);
+    }
+    
+    /* GAME GRID - Penyesuaian ukuran grid agar kartu tidak terlalu besar */
+    .grid-container {
+        gap: 8px; /* Kurangi jarak antar kartu */
+    }
+
+    /* Set max-width grid lebih kecil untuk mobile */
+    .grid-container.easy,
+    .grid-container.medium,
+    .grid-container.hard {
+        max-width: 100%;
+        width: 100%;
+        /* Di mobile, paksa Hard/Medium menggunakan 4 kolom, Easy 3 kolom (opsional) */
+        grid-template-columns: repeat(4, 1fr); 
+    }
+    
+    /* Card Content Scaling */
+    .card-back::after {
+        font-size: 1.5rem; /* Perkecil tanda tanya */
+    }
+    
+    /* Win Modal Scaling */
+    .modal-content {
+        padding: 20px;
+    }
+    .trophy-icon {
+        font-size: 3rem;
+    }
+    .modal-title {
+        font-size: 2rem;
+    }
+}
